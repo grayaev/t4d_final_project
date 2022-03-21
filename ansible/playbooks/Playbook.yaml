@@ -1,1 +1,14 @@
 ---
+- hosts: 
+    app02.project.domain: 10.0.1.9
+    app01.project.domain: 10.0.1.34
+  sudo: yes
+  vars:
+    - mysql_root_password: "Pa$$w0rd!"
+    - db_password: "wordpress"
+  roles:
+  - { role: nginx }
+  - { role: php5 }
+  - { role: php5-fpm }
+  - { role: wordpress }
+  - { role: mysql }
