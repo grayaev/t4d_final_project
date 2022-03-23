@@ -1,6 +1,6 @@
 - name: update repository and install packages 
-      become: true
-      become_user: root
+    become: true
+    become_user: root
       apt:
         update_cache: true
         cache_valid_time: 3600
