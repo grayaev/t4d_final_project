@@ -1,0 +1,8 @@
+---
+- name: Copy authorized_keys to servers
+  ansible.builtin.copy:
+    src: authorized_keys
+    dest: /root/.ssh/authorized_keys
+    owner: root
+    group: root
+    mode: '0400'
