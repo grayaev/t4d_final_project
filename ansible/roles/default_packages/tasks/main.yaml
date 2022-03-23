@@ -1,15 +1,17 @@
-- name: update repository and install packages 
-    become: true
-    become_user: root
-      apt:
-        update_cache: true
-        cache_valid_time: 3600
-        force_apt_get: true      
-        state: present
-        name:
-         - procs
-         - htop
-         - mc
-         - iotop
-         - tree
-         - tmux
+---
+ - name: update repository and install packages 
+   become: true
+   become_user: root
+   apt:
+     update_cache: true
+     cache_valid_time: 3600
+     force_apt_get: true      
+     state: present
+     name:
+        - procs
+        - htop
+        - mc
+        - iotop
+        - tree
+        - tmux
+
