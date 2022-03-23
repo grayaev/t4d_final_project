@@ -1,15 +1,16 @@
 ---
 - hosts: 
-    app02.project.domain: 10.0.1.9
-    app01.project.domain: 10.0.1.34
+    app02.project.domain: 10.0.11.2
+    app01.project.domain: 10.0.22.2
   sudo: yes
   #Исправить! не секьюрно!
   vars:
     - mysql_root_password: "Pa$$w0rd!" 
     - db_password: "wordpress"
   roles:
-  - { role: nginx }
+  #- { role: nginx }
   - { role: php5 }
   - { role: php5-fpm }
   - { role: wordpress }
-  - { role: mysql }
+  # - { role: mysql }
+  - { role: default_packages }
