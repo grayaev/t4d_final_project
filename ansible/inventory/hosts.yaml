@@ -1,21 +1,16 @@
 all:
   hosts:
-    monitoring.project.domain: 87.239.109.35 
+    monitoring.project.domain: 5.188.142.6
     app02.project.domain: 5.188.141.58
     app01.project.domain: 185.241.192.50
     rrdns.project.domain: 5.188.142.6
+    mysql_master: 87.239.109.35
   children:
     webservers:
       hosts:
-        app02.project.domain: 10.0.1.9
-        app01.project.domain: 10.0.1.34
-    monitoring:
+        app02.project.domain: 10.0.22.2
+        app01.project.domain: 10.0.11.2
+    nginx:
       hosts:
-        monitoring.project.domain: 10.0.1.10
-    dbservers:
-      hosts:
-        MySQL-t4d-1: 10.0.1.4
-        MySQL-t4d-2: 10.0.1.12
-    rrdns:
-      hosts:
-        rrdns.project.domain: 10.0.1.7
+        nginx01.project.domain: 10.0.11.3
+        nginx02.project.domain: 10.0.22.3
