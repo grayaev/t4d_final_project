@@ -1,9 +1,9 @@
 all:
   hosts:
-    monitoring.project.domain: 5.188.142.6
-    app02.project.domain: 5.188.141.58
-    app01.project.domain: 185.241.192.50
-    rrdns.project.domain: 5.188.142.6
+    monitoring.project.domain: 89.208.85.81
+    app02.project.domain: 185.241.192.50
+    app01.project.domain: 5.188.142.6
+    rrdns.project.domain: 146.185.243.121
     mysql_master: 87.239.109.35
   children:
     webservers:
