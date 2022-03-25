@@ -1,6 +1,5 @@
 ---
 - name: reboot servers
-  hosts: test_servers
   become_method: sudo
   become_user: root
 
