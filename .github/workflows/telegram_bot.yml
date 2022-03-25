@@ -27,10 +27,10 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: curl -s -X POST https://api.telegram.org/bot5194189906:AAF6rsCetWxbwaECPICclTNqne95lUN6miE/sendMessage -d chat_id=-752672460 -d text="${{ github.event_name }} ${{ github.actor }} in master"
+        run: curl -s -X POST https://api.telegram.org/bot5194189906:AAF6rsCetWxbwaECPICclTNqne95lUN6miE/sendMessage -d chat_id=-752672460 -d text="TEST ${{ github.actor }} ${{ github.event_name }}  in master ${{ github.repository }}"
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+#      # Runs a set of commands using the runners shell
+#      - name: Run a multi-line script
+#        run: |
+#          echo Add other actions to build,
+#          echo test, and deploy your project.
