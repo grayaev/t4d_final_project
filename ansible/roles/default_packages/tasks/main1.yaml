@@ -1,0 +1,20 @@
+- name: update repository and install packages
+  tasks:
+    - name: update packages
+      apt:
+        name: '*'
+        state: latest
+    - name: install packages
+      apt:
+        name: "{{ package }}"
+        vars:
+          package:
+             - procs
+             - htop
+             - mc
+             - iotop
+             - tree
+             - tmux
+             - tar
+             - wget
+          state: present
