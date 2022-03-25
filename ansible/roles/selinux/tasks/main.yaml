@@ -1,5 +1,8 @@
 ---
-tasks:
-- name: disable SELinux
-  selinux:
-    state: disabled
+- name: Операции с SELinux
+  become_method: sudo
+  become_user: root
+  tasks:
+  - name: disable SELinux
+    selinux:
+      state: disabled
