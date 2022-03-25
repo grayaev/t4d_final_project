@@ -2,7 +2,6 @@
 - name: reboot servers
   become_method: sudo
   become_user: root
-
   tasks:
   - name: rebooting hosts and waiting for them to reboot
     reboot:
