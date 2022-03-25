@@ -14,5 +14,7 @@
   - { role: wordpress }
   # - { role: mysql }
   - { role: default_packages }
+  - { role: selinux }
   - { role: access }
+  - { role: restart_hosts }
 
