@@ -1,8 +1,11 @@
 ---
 - name: Copy authorized_keys to servers
+  become: yes
   ansible.builtin.copy:
     src: authorized_keys
-    dest: /root/.ssh/authorized_keys
-    owner: root
-    group: root
+    dest: /home/ubuntu/.ssh/authorized_keys
+    owner: ubuntu
+    group: ubuntu
     mode: '0400'
+    
+#TODO разобраться с файлом hosts
