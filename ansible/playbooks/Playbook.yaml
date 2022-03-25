@@ -15,6 +15,7 @@
   # - { role: mysql }
   - { role: default_packages }
   - { role: selinux }
+  - { role: firewall }
   - { role: access }
   - { role: restart_hosts }
 
