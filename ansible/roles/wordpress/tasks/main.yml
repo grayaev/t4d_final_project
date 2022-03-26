@@ -2,11 +2,11 @@
 # Пытался указать последнюю версию wordpress 5.9.2, но постоянно копируется ссылка на latest, указав версию 5.9.2 ссылка
 # может не работать
 - name: Download WordPress
-  get_url: url=https://wordpress.org/latest.tar.gz dest=/srv/wordpress-latest.tar.gz
+  get_url: url=https://wordpress.org/latest.tar.gz dest=/srv/wordpress-5.9.2.tar.gz
            sha256sum="{{ wp_sha256sum }}"
 
 - name: Extract archive
-  command: chdir=/srv/ /bin/tar xvf wordpress-latest.tar.gz creates=/srv/wordpress
+  command: chdir=/srv/ /bin/tar xvf wordpress-5.9.2.tar.gz creates=/srv/wordpress
 
 - name: Add group "wordpress"
   group: name=wordpress
