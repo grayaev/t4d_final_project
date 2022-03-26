@@ -1,19 +1,19 @@
 ---
-- name: creating database
-  mysql_db:
-    name: "{{ admin }}"
-    state: "present"
-    login_user: "root"
-    login_password: "{{ 123456 }}"
-
-- name: creating database user
-  mysql_user:
-    name: "{{ admin }}"
-    password: "{{ 12345 }}"
-    priv: "{{ admin }}.*:ALL"
-    state: "present"
-    login_user: "root"
-    login_password: "{{ 123456 }}"
+#- name: creating database
+#  mysql_db:
+#    name: "{{ admin }}"
+#    state: "present"
+#    login_user: "root"
+#    login_password: "{{ 123456 }}"
+#
+#- name: creating database user
+#  mysql_user:
+#    name: "{{ admin }}"
+#    password: "{{ 12345 }}"
+#    priv: "{{ admin }}.*:ALL"
+#    state: "present"
+#    login_user: "root"
+#    login_password: "{{ 123456 }}"
 
 - name: install nginx configuration
   template:

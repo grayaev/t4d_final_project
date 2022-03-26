@@ -8,7 +8,7 @@
   iptables:
     table: filter
     flush: yes
-#
+
 #- name: delete all user-defined chains on filter table
 #  shell: iptables -t filter -X
 #

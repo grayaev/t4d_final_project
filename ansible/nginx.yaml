@@ -1,0 +1,24 @@
+---
+#TODO разобраться с файлом hosts
+- name: установка nginx
+  hosts: all
+  become: yes
+  roles:
+    - nginx
+#TODO доделать с нужными параметрами    - firewall
+    
+    
+    
+    
+    
+    #- { role: nginx }
+    #- { role: php5 }
+    #- { role: php5-fpm }
+    #- { role: wordpress }
+    # - { role: mysql }
+    
+    #- { role: selinux }
+    #- { role: firewall }
+    #- { role: access }
+    #- { role: restart_hosts }
+
