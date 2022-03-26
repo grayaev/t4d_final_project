@@ -20,4 +20,5 @@ all:
                     ansible_host: 89.208.85.81
         test:
             hosts:
-                test: 37.139.33.181
+                test:
+                    ansible_host: 37.139.33.181

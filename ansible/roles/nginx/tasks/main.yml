@@ -2,8 +2,14 @@
 - name: Add nginx repository
   apt_repository: repo='ppa:nginx/stable'
 
-- name: Install nginx
-  action: apt pkg=nginx-extras state=installed update_cache=true
+- name: Install Nginx Web Server on Debian Family
+  apt:
+    name=nginx
+    state=latest
+  when:
+    ansible_os_family == "Debian"
+  notify:
+    - nginx systemd
 
 - name: Disable default site
   file: 
