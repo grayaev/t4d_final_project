@@ -1,4 +1,35 @@
 ---
+- name: Download WordPress
+  get_url: url=http://wordpress.org/wordpress-{{ wp_version }}.tar.gz dest=/srv/wordpress-{{ wp_version }}.tar.gz
+           sha256sum="{{ wp_sha256sum }}"
+
+- name: Extract archive
+  command: chdir=/srv/ /bin/tar xvf wordpress-{{ wp_version }}.tar.gz creates=/srv/wordpress
+
+- name: Add group "wordpress"
+  group: name=wordpress
+
+- name: Add user "wordpress"
+  user: name=wordpress group=wordpress home=/srv/wordpress/
+
+- name: Create WordPress database
+  mysql_db: name={{ wp_db_name }} state=present
+
+- name: Create WordPress database user
+  mysql_user: name={{ wp_db_user }} password={{ wp_db_password }} priv={{ wp_db_name }}.*:ALL host='localhost' state=present
+
+- name: Copy WordPress config file
+  template: src=wordpress.conf dest=/srv/wordpress/
+
+- name: Change ownership of WordPress installation
+  file: path=/srv/wordpress/ owner=wordpress group=wordpress state=directory recurse=yes
+
+- name: Start php-fpm Service
+  service: name=php-fpm state=started enabled=yes
+
+
+
+
 #- name: creating database
 #  mysql_db:
 #    name: "{{ admin }}"
@@ -15,29 +46,29 @@
 #    login_user: "root"
 #    login_password: "{{ 123456 }}"
 
-- name: install nginx configuration
-  template:
-    src: wordpress.conf
-    dest: /etc/nginx/sites-available/wordpress.conf
-  notify: restart nginx
+#- name: install nginx configuration
+#  template:
+#      src: wordpress.conf
+#      dest: /etc/nginx/sites-available/wordpress.conf
+#  notify: restart nginx
 
-- name: activate site configuration
-  file:
-    src: '/etc/nginx/sites-available/wordpress.conf'
-    dest: '/etc/nginx/sites-enabled/wordpress.conf'
-    state: 'link'
+#- name: activate site configuration
+#  file:
+#    src: '/etc/nginx/sites-available/wordpress.conf'
+#    dest: '/etc/nginx/sites-enabled/wordpress.conf'
+#    state: 'link'
 
-- name: download WordPress
-  get_url:
-    url: "{{ https://ru.wordpress.org/latest-ru_RU.tar.gz }}"
-    dest: "/tmp/latest.tar.gz"
+#- name: download WordPress
+#  get_url:
+#    url: "{{https://ru.wordpress.org/latest-ru_RU.tar.gz}}"
+#    dest: "/tmp/latest.tar.gz"
 
-- name: creating directory for WordPress
-  file:
-    path: "{{ wpdirectory }}"
-    state: "directory"
-    owner: "www-data"
-    group: "www-data"
+#- name: creating directory for WordPress
+#  file:
+#    path: "{{ wpdirectory }}"
+#    state: "directory"
+#    owner: "www-data"
+#    group: "www-data"
 
-- name: unpack WordPress installation
-  shell: "tar xvfz /tmp/latest.tar.gz -C {{ wpdirectory }} && chown -R www-data:www-data {{ wpdirectory }}"
+#- name: unpack WordPress installation
+#  shell: "tar xvfz /tmp/latest.tar.gz -C {{ wpdirectory }} && chown -R www-data:www-data {{ wpdirectory }}"
