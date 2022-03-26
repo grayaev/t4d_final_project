@@ -1,0 +1,21 @@
+---
+all:
+    vars:
+        ansible_user: ubuntu
+        ansible_ssh_private_key_file: ./MySQL-t4d-ncbHpgFq.pem
+    hosts:
+        89.208.85.81:
+        185.241.192.50:
+        5.188.142.6:
+        87.239.109.35:
+    children:
+        webservers:
+            hosts:
+                5.188.142.6:
+                185.241.192.50:
+        mysql:
+            hosts:
+                87.239.109.35:
+        monitoring:
+            hosts:
+                89.208.85.81:
