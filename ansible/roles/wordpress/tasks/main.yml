@@ -26,4 +26,10 @@
 - name: unpack WordPress installation
   shell: "tar xvfz /tmp/latest.tar.gz -C /var/www/ && chown -R www-data:www-data /var/www/wordpress"
   
+- name: update wp-config
+  become: yes
+  template:
+    src: wp-config.php
+    dest: /var/www/wordpress/wp-config.php
+  
 ########## user//5t1ah1P8RZN(q039

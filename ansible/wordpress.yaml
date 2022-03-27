@@ -1,5 +1,5 @@
 - name: установка wordpress
-  hosts: app02.project.domain
+  hosts: test
   become: yes
   vars:
     - mysql_root_password: "5t1ah1P8RZN(q039"
@@ -8,24 +8,3 @@
     - nginx
     - php5
     - wordpress
-
-#    - mysql
-#    - memcached
-#    - wordpress
-#- name: установка wordpress
-#  hosts: test
-#  become: yes
-#  vars:
-#    - mysql_root_password: "SuperP@S$w0rd"
-#    - domain: "example.com"
-#    - download_url: "http://wordpress.org/latest.tar.gz"
-#    - wpdirectory: "/var/www"
-#    - db_name: "wordpress"
-#    - db_user: "wordpress"
-#    - db_password: "wordpress"
-#  roles:
-#    - { role: nginx }
-#    - { role: percona-mysql }
-#    - { role: memcached }
-#    - { role: php5 }
-#    - { role: wordpress }
