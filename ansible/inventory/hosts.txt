@@ -11,7 +11,7 @@ app02 ansible_host=185.241.192.50
 ansible_user=ubuntu
 ansible_ssh_private_key_file=./MySQL-t4d-ncbHpgFq.pem
 
-
+DB_PASS = "5t1ah1P8RZN(q039"
 #all:
 #  hosts:
 #    monitoring.project.domain: 89.208.85.81

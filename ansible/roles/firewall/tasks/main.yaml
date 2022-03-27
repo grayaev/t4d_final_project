@@ -5,7 +5,7 @@
 - name: enable firewalld
   service:
     name: firewalld
-    state: restarted
+    state: started
 
 - name: permit traffic through port 80/tcp (http)
   ansible.builtin.firewalld:

@@ -1,0 +1,21 @@
+- name: install php5
+  become: yes
+  apt: name={{ item }}
+  with_items:
+    - php
+    - php-cgi
+    - php-fpm
+    - php-memcache
+    - php-memcached
+    - php-mysql
+    - php-gd
+    - php-curl
+    - php-xmlrpc
+
+- name: php settings file
+  become: yes
+  template:
+    src: php.ini
+    dest: /etc/php/7.4/fpm/php.ini
+#  notify:
+#    - restart php-fpm

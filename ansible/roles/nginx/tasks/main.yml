@@ -9,9 +9,10 @@
   when:
     ansible_os_family == "Debian"
   notify:
-    - nginx systemd
+    - restart nginx
 
 - name: Disable default site
-  file: 
+  become: yes
+  file:
     path: /etc/nginx/sites-enabled/default
     state: absent
