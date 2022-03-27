@@ -1,6 +1,6 @@
 - name: install firewalld service
   become: yes
-  apt: name=firewalld update_cache=yes
+  apt: name=firewalld
 
 - name: enable firewalld
   service:
