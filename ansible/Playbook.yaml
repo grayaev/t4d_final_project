@@ -7,6 +7,8 @@
     - default_packages
     - access
     - firewall
+    - prometheus
+    - grafana
     
     
     
