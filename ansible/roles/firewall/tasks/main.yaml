@@ -1,13 +1,11 @@
 - name: install firewalld service
-  ansible.builtin.apt:
-    name: firewalld
-    state: present
-    enabled: yes
+  become: yes
+  apt: name=firewalld update_cache=yes
 
 - name: enable firewalld
   service:
     name: firewalld
-    state: enabled
+    state: restarted
 
 - name: permit traffic through port 80/tcp (http)
   ansible.builtin.firewalld:
