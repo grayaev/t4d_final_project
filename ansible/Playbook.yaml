@@ -6,7 +6,7 @@
   roles:
     - default_packages
     - access
-#TODO доделать с нужными параметрами    - firewall
+    - firewall
     
     
     

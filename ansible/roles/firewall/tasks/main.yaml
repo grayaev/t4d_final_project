@@ -3,24 +3,33 @@
     name: firewalld
     state: present
     enabled: yes
-- name: permit trafic through port 80/tcp (http)
+
+- name: enable firewalld
+  service:
+    name: firewalld
+    state: enabled
+
+- name: permit traffic through port 80/tcp (http)
   ansible.builtin.firewalld:
     zone: public
     service: http
     permanent: yes
     state: enabled
+
 - name: permit traffic through port 443/tcp (https)
   ansible.builtin.firewalld:
     zone: public
     service: https
     permanent: yes
     state: enabled
+
 - name: permit traffic through port 22/tcp (ssh)
   ansible.builtin.firewalld:
     zone: public
     service: ssh
     permanent: yes
     state: enabled
+
 - name: restart service firewalld
   ansible.builtin.service:
     name: firewalld
