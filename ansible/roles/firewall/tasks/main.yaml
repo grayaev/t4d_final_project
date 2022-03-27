@@ -1,71 +1,27 @@
-#TODO берем туториал и делаем https://docs.ansible.com/ansible/latest/collections/ansible/builtin/iptables_module.html
-- name: change default chain policy (used to clean rules)
-  iptables:
-    chain: INPUT
-    policy: ACCEPT
-
-- name: clean rules on all chains of filter table
-  iptables:
-    table: filter
-    flush: yes
-
-#- name: delete all user-defined chains on filter table
-#  shell: iptables -t filter -X
-#
-#- name: Allow packages to loopback interface
-#  iptables:
-#    in_interface: lo
-#    chain: INPUT
-#    jump: ACCEPT
-#    comment: loopback
-#
-#- name: Allow established state
-#  iptables:
-#    chain: INPUT
-#    ctstate: ESTABLISHED
-#    jump: ACCEPT
-#
-#- name: Allow ssh connection
-#  iptables:
-#    chain: INPUT
-#    src_range: 192.168.0.1-192.168.0.170
-#    protocol: tcp
-#    destination_port: '22'
-#    jump: ACCEPT
-#    comment: ssh
-#
-#- name: Allow http connection
-#  iptables:
-#    chain: INPUT
-#    source: 192.168.1.0/24
-#    protocol: tcp
-#    destination_port: '80'
-#    jump: ACCEPT
-#    comment: http
-#
-#- name: Allow ftp connection
-#  iptables:
-#    chain: INPUT
-#    protocol: tcp
-#    source_port: "{{ item }}"
-#    jump: ACCEPT
-#    comment: ftp
-#  with_items: [ '20', '21' ]
-#
-#- name: set default chain policy
-#  iptables:
-#    chain: INPUT
-#    policy: DROP
-#
-#    # ------- nat rules -------
-#
-#- name: clean rules on all chains of nat table
-#  iptables:
-#    table: nat
-#    flush: yes
-#
-#- name: delete all user-defined chains on nat table
-#  shell: iptables -t nat -X
-#
-#- name: masquerade connection
-#  shell: iptables -t nat -A POSTROUTING -o ppp0 -j MASQUERADE
+- name: install firewalld service
+  ansible.builtin.apt:
+    name: firewalld
+    state: present
+    enabled: yes
+- name: permit trafic through port 80/tcp (http)
+  ansible.builtin.firewalld:
+    zone: public
+    service: http
+    permanent: yes
+    state: enabled
+- name: permit traffic through port 443/tcp (https)
+  ansible.builtin.firewalld:
+    zone: public
+    service: https
+    permanent: yes
+    state: enabled
+- name: permit traffic through port 22/tcp (ssh)
+  ansible.builtin.firewalld:
+    zone: public
+    service: ssh
+    permanent: yes
+    state: enabled
+- name: restart service firewalld
+  ansible.builtin.service:
+    name: firewalld
+    state: restarted
