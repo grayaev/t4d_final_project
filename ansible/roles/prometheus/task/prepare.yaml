@@ -1,0 +1,23 @@
+---
+- name: Security Settings For Debian
+  block:
+    - name: Allow TCP Ports
+      iptables:
+        chain: INPUT
+        rule_num: '1'
+        action: insert
+        protocol: tcp
+        jump: ACCEPT
+        destination_port: "{{ item }}"
+      loop: [ '9090', '9093', '9094', '9100' ]
+
+    - name: Allow UDP Ports
+      iptables:
+        chain: INPUT
+        rule_num: '1'
+        action: insert
+        protocol: udp
+        jump: ACCEPT
+        destination_port: '9094'
+  when:
+    ansible_os_family == "Debian"

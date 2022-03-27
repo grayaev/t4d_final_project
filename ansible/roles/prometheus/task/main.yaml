@@ -1,0 +1,9 @@
+---
+- name: Prepare for install Prometheus
+  include_tasks: tasks/prepare.yaml
+
+- name: Install Prometheus
+  include_tasks: tasks/install_prometheus.yaml
+
+- name: Install Alertmanager
+  include_tasks: tasks/install_alertmanager.yaml
