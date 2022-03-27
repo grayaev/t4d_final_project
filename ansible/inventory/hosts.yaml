@@ -1,18 +1,24 @@
+---
 all:
-  hosts:
-    monitoring.project.domain: 5.188.142.6
-    app02.project.domain: 5.188.141.58
-    app01.project.domain: 185.241.192.50
-    rrdns.project.domain: 5.188.142.6
-    mysql_master: 87.239.109.35
+  vars:
+    ansible_user: ubuntu
+    ansible_ssh_private_key_file: ./MySQL-t4d-ncbHpgFq.pem
   children:
     webservers:
       hosts:
-        app02.project.domain: 10.0.1.37
-        app01.project.domain: 10.0.1.20
+        app01.project.domain:
+          ansible_host: 5.188.142.6
+        app02.project.domain:
+              ansible_host: 185.241.192.50
     mysql:
       hosts:
-        mysql_master: 10.0.1.4
+        MySQL-t4d-1:
+          ansible_host: 87.239.109.35
     monitoring:
       hosts:
-         monitoring.project.domain: 10.0.1.10
+        monitoring.project.domain:
+          ansible_host: 89.208.85.81
+    test:
+      hosts:
+        test:
+          ansible_host: 37.139.33.181

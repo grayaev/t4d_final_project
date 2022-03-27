@@ -1,0 +1,6 @@
+- name: установка nginx
+  hosts: all
+  become: yes
+  roles:
+    - php-fpm
+    - wordpress

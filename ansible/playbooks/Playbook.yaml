@@ -1,20 +1,20 @@
 ---
-- hosts: 
-    app02.project.domain: 10.0.1.37
-    app01.project.domain: 10.0.1.20
+- hosts:
+      app02.project.domain: 10.0.1.37
+      app01.project.domain: 10.0.1.20
   sudo: yes
   #Исправить! не секьюрно!
-  vars:
-    - mysql_root_password: "Pa$$w0rd!" 
-    - db_password: "wordpress"
+  #vars:
+  #    - mysql_root_password: "Pa$$w0rd!"
+  #    - db_password: "wordpress"
   roles:
   #- { role: nginx }
-  - { role: php5 }
-  - { role: php5-fpm }
+  #- { role: php5 }
+  - { role: php-fpm }
   - { role: wordpress }
   # - { role: mysql }
-  - { role: default_packages }
-  - { role: selinux }
-  - { role: access }
-  - { role: restart_hosts }
+  #- { role: default_packages }
+  #- { role: selinux }
+  #- { role: access }
+  #- { role: restart_hosts }
 

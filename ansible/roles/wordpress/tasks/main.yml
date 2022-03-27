@@ -1,43 +1,77 @@
 ---
-- name: creating database
-  mysql_db:
-    name: "{{ admin }}"
-    state: "present"
-    login_user: "root"
-    login_password: "{{ 123456 }}"
+- name: Download WordPress
+  get_url: https://wordpress.org/wordpress-5.9.2.tar.gz dest=/srv/wordpress-5.9.2.tar.gz
+    sha256sum="{{ wp_sha256sum }}"
 
-- name: creating database user
-  mysql_user:
-    name: "{{ admin }}"
-    password: "{{ 12345 }}"
-    priv: "{{ admin }}.*:ALL"
-    state: "present"
-    login_user: "root"
-    login_password: "{{ 123456 }}"
+- name: Extract archive
+  command: chdir=/srv/ /bin/tar xvf wordpress-5.9.2.tar.gz creates=/srv/wordpress
 
-- name: install nginx configuration
-  template:
-    src: wordpress.conf
-    dest: /etc/nginx/sites-available/wordpress.conf
-  notify: restart nginx
+- name: Add group "wordpress"
+  group: name=wordpress
 
-- name: activate site configuration
-  file:
-    src: '/etc/nginx/sites-available/wordpress.conf'
-    dest: '/etc/nginx/sites-enabled/wordpress.conf'
-    state: 'link'
+- name: Add user "wordpress"
+  user: name=wordpress group=wordpress home=/srv/wordpress/
 
-- name: download WordPress
-  get_url:
-    url: "{{ https://ru.wordpress.org/latest-ru_RU.tar.gz }}"
-    dest: "/tmp/latest.tar.gz"
+- name: Fetch random salts for WordPress config
+  local_action: command curl https://api.wordpress.org/secret-key/1.1/salt/
+  register: "wp_salt"
+  sudo: no
 
-- name: creating directory for WordPress
-  file:
-    path: "{{ wpdirectory }}"
-    state: "directory"
-    owner: "www-data"
-    group: "www-data"
+#- name: Create WordPress database
+#  mysql_db: name={{ wp_db_name }} state=present
+#
+#- name: Create WordPress database user
+#  mysql_user: name={{ wp_db_user }} password={{ wp_db_password }} priv={{ wp_db_name }}.*:ALL host='localhost' state=present
 
-- name: unpack WordPress installation
-  shell: "tar xvfz /tmp/latest.tar.gz -C {{ wpdirectory }} && chown -R www-data:www-data {{ wpdirectory }}"
+- name: Copy WordPress config file
+  template: src=wp-config.php dest=/srv/wordpress/
+
+- name: Change ownership of WordPress installation
+  file: path=/srv/wordpress/ owner=wordpress group=wordpress state=directory recurse=yes
+
+- name: Start php-fpm Service
+  service: name=php-fpm state=started enabled=yes
+
+
+#- name: creating database
+#  mysql_db:
+#    name: "{{ admin }}"
+#    state: "present"
+#    login_user: "root"
+#    login_password: "{{ 123456 }}"
+#
+#- name: creating database user
+#  mysql_user:
+#    name: "{{ admin }}"
+#    password: "{{ 12345 }}"
+#    priv: "{{ admin }}.*:ALL"
+#    state: "present"
+#    login_user: "root"
+#    login_password: "{{ 123456 }}"
+#
+#- name: install nginx configuration
+#  template:
+#    src: wordpress.conf
+#    dest: /etc/nginx/sites-available/wordpress.conf
+#  notify: restart nginx
+#
+#- name: activate site configuration
+#  file:
+#    src: '/etc/nginx/sites-available/wordpress.conf'
+#    dest: '/etc/nginx/sites-enabled/wordpress.conf'
+#    state: 'link'
+#
+#- name: download WordPress
+#  get_url:
+#    url: "{{ https://ru.wordpress.org/latest-ru_RU.tar.gz }}"
+#    dest: "/tmp/latest.tar.gz"
+#
+#- name: creating directory for WordPress
+#  file:
+#    path: "{{ wpdirectory }}"
+#    state: "directory"
+#    owner: "www-data"
+#    group: "www-data"
+#
+#- name: unpack WordPress installation
+#  shell: "tar xvfz /tmp/latest.tar.gz -C {{ wpdirectory }} && chown -R www-data:www-data {{ wpdirectory }}"

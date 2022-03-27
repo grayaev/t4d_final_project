@@ -1,19 +1,22 @@
 ---
-- name: install php5
-  apt: pkg={{ item }}
+- name: install php-fpm
+  apt: name={{ item }} state=present
   with_items:
-    - php5
-    - php5-cgi
-    - php5-fpm
-    - php5-mcrypt
-    - php5-mysql
-    - php5-gd
-    - php5-curl
-    - php5-xmlrpc
+    - php
+    - php-fpm
+    - php-enchant
+    - php-IDNA_Convert
+    - php-mbstring
+    - php-mysql
+    - php-PHPMailer
+    - php-process
+    - php-simplepie
+    - php-xml
 
-- name: change listen socket
-  lineinfile:
-    dest: '/etc/php5/fpm/pool.d/www.conf'
-    insertafter: 'listen = 127.0.0.1:9000'
-    line: 'listen = /var/run/fpm.socket'
-  notify: restart php5-fpm
+- name: Disable default pool
+  command: mv /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.disabled creates=/etc/php-fpm.d/www.disabled
+  notify: restart php-fpm
+
+- name: Copy php-fpm configuration
+  template: src=wordpress.conf dest=/etc/php-fpm.d/
+  notify: restart php-fpm
