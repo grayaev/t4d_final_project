@@ -1,5 +1,8 @@
 - name: restart nginx
-  become: true
-  service:
-    name: nginx
-    state: restarted
+  service: name=nginx state=restarted enabled=yes
+
+#- name: restart nginx
+#  become: true
+#  service:
+#    name: nginx
+#    state: restarted
