@@ -26,3 +26,12 @@
     state: present
     check_implicit_admin: true
     login_unix_socket: /var/run/mysqld/mysqld.sock
+    
+- name: update mysqld.cnf
+  become: yes
+  template:
+    src: mysqld.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    
+- name: Start the MySQL service
+  action: service name=mysql state=restarted
