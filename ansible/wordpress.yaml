@@ -1,5 +1,5 @@
 - name: установка wordpress
-  hosts: test
+  hosts: all
   become: yes
   vars:
     - mysql_root_password: "5t1ah1P8RZN(q039"

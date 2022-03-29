@@ -27,6 +27,13 @@
     service: ssh
     permanent: yes
     state: enabled
+    
+- name: permit traffic through port 3306/tcp (mysql)
+  ansible.builtin.firewalld:
+    zone: public
+    service: mysql
+    permanent: yes
+    state: enabled
 
 - name: restart service firewalld
   ansible.builtin.service:

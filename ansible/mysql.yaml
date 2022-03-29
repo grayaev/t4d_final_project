@@ -1,0 +1,9 @@
+---
+- name: установка mysql
+  hosts: all
+  become: yes
+  vars:
+    db_user: "user"
+    db_pass: "5t1ah1P8RZN(q039"
+  roles:
+    - mysql

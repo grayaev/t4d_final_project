@@ -1,0 +1,28 @@
+---
+- name: Install MySQL
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - python3-mysqldb
+    - mysql-server
+
+- name: Start the MySQL service
+  action: service name=mysql state=started
+  
+- name: create user mysql
+  mysql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_pass }}"
+    priv: '*.*:ALL'
+    host: '%'
+    state: present
+    check_implicit_admin: true
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    
+- name: Create a new database
+  mysql_db:
+    name: wordpress
+    state: present
+    check_implicit_admin: true
+    login_unix_socket: /var/run/mysqld/mysqld.sock

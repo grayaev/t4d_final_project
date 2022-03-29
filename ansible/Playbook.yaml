@@ -1,5 +1,4 @@
 ---
-#TODO разобраться с файлом hosts
 - name: установка стандартных утилит
   hosts: all
   become: yes
@@ -7,21 +6,7 @@
     - default_packages
     - access
     - firewall
-    - prometheus
-    - grafana
-    
-    
-    
-    
-    
-    #- { role: nginx }
-    #- { role: php5 }
-    #- { role: php5-fpm }
-    #- { role: wordpress }
-    # - { role: mysql }
-    
-    #- { role: selinux }
-    #- { role: firewall }
-    #- { role: access }
-    #- { role: restart_hosts }
+#    - prometheus
+#    - grafana
+
 
