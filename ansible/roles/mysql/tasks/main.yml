@@ -5,7 +5,7 @@
     update_cache: yes
   with_items:
     - python3-mysqldb
-    - mysql-server
+    - mysql-server-8.0
 
 - name: Start the MySQL service
   action: service name=mysql state=started
