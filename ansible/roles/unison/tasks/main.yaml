@@ -1,0 +1,36 @@
+---
+- name: Install unison
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - unison
+    - unison-all
+    - cron
+
+- name: enable cron
+  action: service name=cron state=started
+### path /var/www/wordpress
+
+- name: update unison/default.prf
+  become: yes
+  template:
+    src: default.prf
+    dest: ~/.unison/default.prf
+
+- name: Copy file
+  become: yes
+  ansible.builtin.copy:
+    content: unisonsync
+    dest: /usr/local/bin/unisonsync
+    owner: ubuntu
+    group: ubuntu
+    mode: '0755'
+
+- name: Creates a cron file under
+  ansible.builtin.cron:
+    name: unisonsync
+    minute: "5"
+    user: ubuntu
+    job: "YUMINTERACTIVE=0 /usr/sbin/yum-autoupdate"
+    cron_file: unisonsync
