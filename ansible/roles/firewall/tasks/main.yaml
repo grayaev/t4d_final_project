@@ -1,6 +1,8 @@
 - name: install firewalld service
   become: yes
-  apt: name=firewalld
+  apt:
+    name: firewalld
+    update_cache: yes
 
 - name: enable firewalld
   service:
@@ -32,6 +34,12 @@
   ansible.builtin.firewalld:
     zone: public
     service: mysql
+    permanent: yes
+    state: enabled
+    
+- name: permit traffic through port 9100/tcp (node_exporter)
+  ansible.posix.firewalld:
+    port: 9100/tcp
     permanent: yes
     state: enabled
 

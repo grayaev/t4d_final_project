@@ -2,10 +2,13 @@
 - name: установка стандартных утилит
   hosts: all
   become: yes
+  vars:
+    node_exporter_version: 1.1.2
   roles:
     - default_packages
     - access
     - firewall
+    - node_exporter
 #    - prometheus
 #    - grafana
 
