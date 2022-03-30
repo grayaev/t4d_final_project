@@ -42,6 +42,18 @@
     port: 9100/tcp
     permanent: yes
     state: enabled
+  
+- name: permit traffic through port 9090tcp (prometheus)
+  ansible.posix.firewalld:
+    port: 9090/tcp
+    permanent: yes
+    state: enabled
+    
+- name: permit traffic through port 3000tcp (grafana)
+  ansible.posix.firewalld:
+    port: 3000/tcp
+    permanent: yes
+    state: enabled
 
 - name: restart service firewalld
   ansible.builtin.service:
