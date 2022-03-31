@@ -23,9 +23,9 @@
   templates:
     src: unisonsync.sh
     dest: /usr/bin/unisonsync.sh
-   # owner: ubuntu
-   # group: ubuntu
-   # mode: '0755'
+    owner: ubuntu
+    group: ubuntu
+    mode: '0755'
 
 - name: Performs synchronization every 5 minutes
   ansible.builtin.cron:
