@@ -1,0 +1,9 @@
+---
+- name: reload systemd unit
+  systemd:
+      daemon_reload: yes
+
+- name: restart nginx_exporter
+  systemd:
+      name: "{{ nginx_vts_exporter_service_name }}"
+      state: restarted

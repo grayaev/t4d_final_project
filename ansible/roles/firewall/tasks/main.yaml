@@ -60,6 +60,12 @@
     port: 9913/tcp
     permanent: yes
     state: enabled
+    
+- name: permit traffic through port 8080/tcp (nginx_expotrter)
+  ansible.posix.firewalld:
+    port: 8080/tcp
+    permanent: yes
+    state: enabled
 
 - name: restart service firewalld
   ansible.builtin.service:

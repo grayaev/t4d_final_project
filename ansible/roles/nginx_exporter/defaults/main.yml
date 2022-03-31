@@ -1,0 +1,13 @@
+---
+
+nginx_exporter_version: 0.10.0
+nginx_exporter_nginx_plus: false
+
+nginx_exporter_system_group: nginx_exporter
+nginx_exporter_system_user: "{{ nginx_exporter_system_group }}"
+
+nginx_exporter_download_url: >
+  https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v0.10.0/nginx-prometheus-exporter_0.10.0_darwin_amd64.tar.gz
+
+nginx_exporter_listen_address: 0.0.0.0:9113
+nginx_exporter_scrape_uri: http://127.0.0.1:80

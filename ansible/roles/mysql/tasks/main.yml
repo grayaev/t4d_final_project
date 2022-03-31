@@ -27,11 +27,11 @@
     check_implicit_admin: true
     login_unix_socket: /var/run/mysqld/mysqld.sock
     
-- name: update node_exporter.service.j2
+- name: update node_exporter.service.j2.j2
   become: yes
   template:
-    src: node_exporter.service.j2
-    dest: /etc/mysql/mysql.conf.d/node_exporter.service.j2
+    src: node_exporter.service.j2.j2
+    dest: /etc/mysql/mysql.conf.d/node_exporter.service.j2.j2
     
 - name: Start the MySQL service
   action: service name=mysql state=restarted

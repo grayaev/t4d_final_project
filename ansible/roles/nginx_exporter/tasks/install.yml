@@ -1,0 +1,45 @@
+---
+
+- name: Create nginx_exporter system group
+  group:
+    name: "{{ nginx_exporter_system_group }}"
+    state: present
+    system: true
+
+- name: Create the nginx_exporter user
+  user:
+    name: "{{ nginx_exporter_system_user }}"
+    groups: "{{ nginx_exporter_system_group }}"
+    append: true
+    shell: /usr/sbin/nologin
+    system: true
+    createhome: false
+
+- name: Get nginx_exporter binary to local folder
+  copy:
+    src: "files/nginx-prometheus-exporter_0.10.0_linux_amd64.tar"
+    dest: "/tmp/nginx-prometheus-exporter_0.10.0_linux_amd64.tar"
+
+- name: Unpack node_exporter binary
+  become: yes
+  ansible.builtin.unarchive:
+    src: /tmp/nginx-prometheus-exporter_0.10.0_linux_amd64.tar
+    dest: /tmp/
+    remote_src: yes
+
+- name: Create local bin dir
+  file:
+    path: /usr/local/bin
+    state: directory
+    mode: 0755
+
+- name: Propagate nginx_exporter binary
+  become: yes
+  copy:
+    remote_src: yes
+    src: /tmp/nginx-prometheus-exporter
+    dest: /usr/local/bin/nginx_exporter
+    mode: 0750
+    owner: "{{ nginx_exporter_system_user }}"
+    group: "{{ nginx_exporter_system_group }}"
+  notify: restart nginx_exporter

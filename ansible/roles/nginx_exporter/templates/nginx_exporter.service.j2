@@ -1,0 +1,12 @@
+[Unit]
+Description=Prometheus Apache Exporter
+After=network.target
+
+[Service]
+User={{ nginx_exporter_system_user }}
+Group={{ nginx_exporter_system_group }}
+
+ExecStart=/usr/local/bin/nginx_exporter \
+          {% if nginx_exporter_nginx_plus %}-nginx.plus\ {% endif %}
+          -nginx.scrape-uri {{ nginx_exporter_scrape_uri }} \
+          -web.listen-address {{ nginx_exporter_listen_address }}
