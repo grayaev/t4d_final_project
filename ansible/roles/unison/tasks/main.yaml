@@ -21,8 +21,8 @@
 - name: Copy file
   become: True
   ansible.builtin.copy:
-    src: unisonsync.sh
-    dest: /usr/bin/unisonsync.sh
+    src: unisonsync
+    dest: /usr/bin/unisonsync
    # owner: ubuntu
    # group: ubuntu
    # mode: '0755'
@@ -32,4 +32,4 @@
     name: unisonsync
     minute: "*/5"
     user: ubuntu
-    job: "/usr/bin/unisonsync.sh"
+    job: "/usr/bin/unisonsync"
