@@ -13,24 +13,23 @@
 ### path /var/www/wordpress
 
 - name: update unison/default.prf
-  become: yes
+  become: True
   template:
     src: default.prf
     dest: ~/.unison/default.prf
 
 - name: Copy file
-  become: yes
+  become: True
   ansible.builtin.copy:
-    content: unisonsync
-    dest: /usr/local/bin/unisonsync
+    content: unisonsync.sh
+    dest: /usr/local/bin/unisonsync.sh
     owner: ubuntu
     group: ubuntu
     mode: '0755'
 
-- name: Creates a cron file under
+- name: Performs synchronization every 5 minutes
   ansible.builtin.cron:
     name: unisonsync
-    minute: "5"
+    minute: "*/5"
     user: ubuntu
-    job: "YUMINTERACTIVE=0 /usr/sbin/yum-autoupdate"
-    cron_file: unisonsync
+    job: "/usr/local/bin/unisonsync.sh"
