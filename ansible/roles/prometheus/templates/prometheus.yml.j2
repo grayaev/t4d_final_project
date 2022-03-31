@@ -9,3 +9,12 @@
     - {{ server }}:9100
 {% endfor %}
 {% endif %}
+{% if prometheus_nginx_vts_group %}
+- job_name: nginx_vts
+  scrape_interval: 15s
+  static_configs:
+  - targets:
+{% for server in groups[prometheus_nginx_vts_group] %}
+    - {{ server }}:9913
+{% endfor %}
+{% endif %}

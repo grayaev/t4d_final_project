@@ -1,0 +1,18 @@
+[Unit]
+Description=Nginx vts Exporter
+After=nginx.service
+
+[Service]
+Type=forking
+User={{ nginx_vts_exporter_service_user|default('www-data') }}
+{% if nginx_vts_exporter_service_group is defined %}Group={{ nginx_vts_exporter_service_group }}
+{% endif %}
+RuntimeDirectory={{ nginx_vts_exporter_service_name }}
+RuntimeDirectoryMode=0755
+EnvironmentFile=/etc/default/{{ nginx_vts_exporter_service_name }}
+PIDFile=/var/run/{{ nginx_vts_exporter_service_name }}/pid
+ExecStart=/sbin/start-stop-daemon -Sbmp /var/run/{{ nginx_vts_exporter_service_name }}/pid -x /usr/local/bin/nginx-vts-exporter -- -nginx.scrape_uri=${NGINX_STATUS} -telemetry.endpoint=${METRICS_ENDPOINT} -telemetry.address=${METRICS_ADDR} -metrics.namespace=${METRICS_NS}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

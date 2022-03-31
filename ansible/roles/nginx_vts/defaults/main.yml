@@ -1,0 +1,5 @@
+---
+nginx_vts_exporter_version: "0.10.7"
+nginx_vts_exporter_binary_url: "https://oss.help/builds/pub/nginx-vts-exporter/{{ nginx_vts_exporter_version }}/nginx-vts-exporter"
+nginx_vts_exporter_sum: "sha256:https://oss.help/builds/pub/nginx-vts-exporter/{{ nginx_vts_exporter_version }}/SHA256SUMS"
+nginx_vts_exporter_service_name: "nginx-vts-exporter"

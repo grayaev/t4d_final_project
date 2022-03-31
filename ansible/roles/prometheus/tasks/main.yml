@@ -13,6 +13,7 @@
       group: root
   notify: restart_prometheus
 - name: prometheus configuration file
+  become: yes
   template:
       src: prometheus.yml.j2
       dest: "{{ prometheus_dir_configuration }}/prometheus.yml"

@@ -54,6 +54,12 @@
     port: 3000/tcp
     permanent: yes
     state: enabled
+    
+- name: permit traffic through port 9913/tcp (nginx_vts)
+  ansible.posix.firewalld:
+    port: 9913/tcp
+    permanent: yes
+    state: enabled
 
 - name: restart service firewalld
   ansible.builtin.service:

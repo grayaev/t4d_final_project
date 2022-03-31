@@ -1,0 +1,6 @@
+##Environment variables for nginx-vts-exporter. More information -  https://github.com/hnlq715/nginx-vts-exporter.
+
+NGINX_STATUS="{{ nginx_vts_exporter_nginx_status | default('http://localhost/vhost_status/format/json') }}"
+METRICS_ENDPOINT="{{ nginx_vts_exporter_metrics_endpoint | default('/metrics') }}"
+METRICS_ADDR="{{ nginx_vts_exporter_metrics_addr | default(':9913') }}"
+METRICS_NS="{{ nginx_vts_exporter_metrics_ns | default('nginx') }}"

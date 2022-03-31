@@ -3,6 +3,7 @@ prometheus_retention_time: "365d"
 prometheus_scrape_interval: "30s"
 prometheus_node_exporter: true
 prometheus_node_exporter_group: "all"
+prometheus_nginx_vts_group: "webservers"
 prometheus_env: "production"
 prometheus_var_config:
     global:
@@ -15,3 +16,4 @@ prometheus_var_config:
           scrape_interval: 5m
           static_configs:
               - targets: ['{{ inventory_hostname }}:9090']
+              - targets: ['{{ inventory_hostname }}:9913']

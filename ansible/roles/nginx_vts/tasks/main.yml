@@ -1,0 +1,30 @@
+---
+- name: install binary
+  get_url:
+    url: "{{ nginx_vts_exporter_binary_url }}"
+    dest: "/usr/local/bin/"
+    checksum: "{{ nginx_vts_exporter_sum }}"
+    mode: 0755
+  when: not ansible_check_mode
+  notify: restart nginx_vts_exporter service
+
+- name: configuration
+  template:
+    src: default-config.j2
+    dest: "/etc/default/{{ nginx_vts_exporter_service_name }}"
+  notify: restart nginx_vts_exporter service
+
+- name: create systemd unit
+  template:
+    src: systemd-unit.j2
+    dest: "/etc/systemd/system/{{ nginx_vts_exporter_service_name }}.service"
+  notify:
+    - reload nginx_vts_exporter unit
+    - restart nginx_vts_exporter service
+
+- meta: flush_handlers
+
+- name: enable systemd unit
+  systemd:
+    name: "{{ nginx_vts_exporter_service_name }}"
+    enabled: true
