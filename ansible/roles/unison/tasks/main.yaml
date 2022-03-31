@@ -14,8 +14,8 @@
 
 - name: update unison/default.prf
   become: True
-  ansible.builtin.copy:
-    src: ansible/roles/unison/templates/default
+  template:
+    src: default
     dest: ~/.unison/default.prf
 
 - name: Copy file
