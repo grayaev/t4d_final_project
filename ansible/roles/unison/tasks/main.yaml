@@ -13,13 +13,13 @@
 ### path /var/www/wordpress
 
 #- name: update unison/default.prf
-#  become: True
+#  become: true
 #  template:
 #    src: default
 #    dest: ~/.unison/default.prf
 
 - name: Copy file
-  become: True
+  become: true
   templates:
     src: unisonsync.sh
     dest: /usr/bin/unisonsync.sh
