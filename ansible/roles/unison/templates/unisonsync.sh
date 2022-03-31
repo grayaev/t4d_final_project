@@ -1,2 +1,2 @@
 #!/bin/bash/
-unison /var/www/wordpress ssh://185.241.192.50//var/www/wordpress
+unison /var/www/wordpress ssh://127.0.0.1//var/www/wordpress
