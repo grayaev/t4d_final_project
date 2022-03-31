@@ -12,11 +12,11 @@
   action: service name=cron state=started
 ### path /var/www/wordpress
 
-- name: update unison/default.prf
-  become: True
-  template:
-    src: default.prf
-    dest: ~/.unison/default.prf
+#- name: update unison/default.prf
+#  become: True
+#  template:
+#    src: default.prf
+#    dest: ~/.unison/default.prf
 
 - name: Copy file
   become: True
