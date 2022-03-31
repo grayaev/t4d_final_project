@@ -21,7 +21,7 @@
 - name: Copy file
   become: True
   ansible.builtin.copy:
-    content: unisonsync.sh
+    src: unisonsync.sh
     dest: /usr/bin/unisonsync.sh
     owner: ubuntu
     group: ubuntu
