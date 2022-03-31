@@ -4,7 +4,7 @@
     name: "{{ item }}"
     update_cache: yes
   with_items:
-    - unison
+    - unison:2.6.38
     - unison-all
     - cron
 
