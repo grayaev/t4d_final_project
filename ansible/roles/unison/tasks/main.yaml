@@ -32,7 +32,7 @@
     dest: /usr/bin/unisonsync.sh
     owner: test
     group: test
-    mode: '0755'
+    mode: '0644'
 
 - name: Performs synchronization every 5 minutes
   ansible.builtin.cron:
