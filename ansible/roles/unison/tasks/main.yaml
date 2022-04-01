@@ -21,7 +21,7 @@
 - name: add file sh
   become: true
   templates:
-    src: unisonsync.sh
+    src: "#!/bin/bash/\n unison /var/www/wordpress ssh://127.0.0.1//var/www/wordpress"
     dest: /usr/bin/unisonsync.sh
     owner: ubuntu
     group: ubuntu
