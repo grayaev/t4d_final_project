@@ -13,8 +13,8 @@
 ### path /var/www/wordpress
 
 - name: create directory with parent directories
-  file:
-    path: ~/.unison/
+  ansible.builtin.file:
+    path: ~/.unison/default.prf
     state: directory
 
 - name: update unison/default.prf
