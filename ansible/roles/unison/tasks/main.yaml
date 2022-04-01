@@ -15,7 +15,7 @@
 - name: Create a directory if
   become: yes
   ansible.builtin.file:
-    path: ~/ .unison/default.prf
+    path: ~/.unison/default.prf
     state: file
     mode: '0755'
 
