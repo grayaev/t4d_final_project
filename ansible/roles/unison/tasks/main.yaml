@@ -29,7 +29,7 @@
   become: true
   ansible.builtin.copy:
     content: '#!/bin/bash/ \n unison /var/www/wordpress ssh://127.0.0.1//var/www/wordpress'
-    dest: /usr/local/bin/unisonsync.sh
+    dest: /usr/bin/unisonsync.sh
     owner: test
     group: test
     mode: '0755'
@@ -39,4 +39,4 @@
     name: unisonsync
     minute: "*/5"
     user: ubuntu
-    job: "/usr/local/bin/unisonsync.sh"
+    job: "/usr/bin/unisonsync.sh"
