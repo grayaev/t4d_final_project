@@ -12,11 +12,11 @@
   action: service name=cron state=started
 ### path /var/www/wordpress
 
-- name: Create a directory if
+- name: Create a directory
   become: true
   ansible.builtin.file:
     path: ~/.unison/default.prf
-    state: file
+    state: directory
     mode: '0755'
 
 - name: update unison/default.prf
