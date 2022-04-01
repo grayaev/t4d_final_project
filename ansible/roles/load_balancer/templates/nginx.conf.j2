@@ -10,9 +10,8 @@ http {
         vhost_traffic_status_zone;
 
 		upstream webservers {
-		{% for server in groups[webservers] %}
-            - {{ server }} max_fails=3 fail_timeout=5s;
-        {% endfor %}
+            server 10.1.0.4 max_fails=3 fail_timeout=5s;
+            server 10.1.0.11 max_fails=3 fail_timeout=5s;
 		}
 
         sendfile on;
@@ -42,4 +41,5 @@ http {
              location / {
                  proxy_pass http://webservers;
              }
+        }
 }

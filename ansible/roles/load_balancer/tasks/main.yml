@@ -84,6 +84,12 @@
     path: /etc/nginx/sites-enabled/default
     state: absent
 
+- name: Create a directory /var/cache/nginx/client_temp
+  ansible.builtin.file:
+    path: /var/cache/nginx/client_temp
+    state: directory
+    mode: '0755'
+
 - name: Starting NGINX
   become: yes
   service:
