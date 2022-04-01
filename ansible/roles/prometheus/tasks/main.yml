@@ -1,4 +1,5 @@
 - name: update and install prometheus
+  become: yes
   apt:
       name: prometheus
       state: latest
