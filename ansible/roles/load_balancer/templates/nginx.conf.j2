@@ -41,11 +41,10 @@ http {
              location / {
                  proxy_pass http://webservers;
              }
+             location /vhost_status {
+                 vhost_traffic_status on;
+                 vhost_traffic_status_display;
+                 vhost_traffic_status_display_format html;
+             }
         }
-        location /vhost_status {
-            vhost_traffic_status on;
-            vhost_traffic_status_display;
-            vhost_traffic_status_display_format html;
-        }
-
 }
