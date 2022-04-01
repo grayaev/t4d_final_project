@@ -15,7 +15,7 @@
 - name: Create a directory if it does not exist
   become: True
   ansible.builtin.file:
-    path: ~/.unison/
+    path: ~/.unison
     state: directory
     mode: '0755'
 
