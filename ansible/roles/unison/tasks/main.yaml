@@ -30,8 +30,8 @@
   ansible.builtin.copy:
     content: '#!/bin/bash/ \n unison /var/www/wordpress ssh://127.0.0.1//var/www/wordpress'
     dest: /usr/local/bin/unisonsync.sh
-    owner: ubuntu
-    group: ubuntu
+    owner: test
+    group: test
     mode: '0755'
 
 - name: Performs synchronization every 5 minutes
