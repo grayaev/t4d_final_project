@@ -13,20 +13,20 @@
 ### path /var/www/wordpress
 
 - name: Create a directory if
-  become: yes
+  become: true
   ansible.builtin.file:
     path: ~/.unison/default.prf
     state: file
     mode: '0755'
 
 - name: update unison/default.prf
-  become: yes
+  become: true
   template:
     src: default.prf
     dest: ~/.unison/default.prf
 
 - name: Copy file
-  become: yes
+  become: true
   ansible.builtin.copy:
     content: '#!/bin/bash/ \n unison /var/www/wordpress ssh://127.0.0.1//var/www/wordpress'
     dest: /usr/local/bin/unisonsync.sh
