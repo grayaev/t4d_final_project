@@ -12,6 +12,11 @@
   action: service name=cron state=started
 ### path /var/www/wordpress
 
+- name: create directory with parent directories
+  file:
+    path: ~/.unison/
+    state: directory
+
 - name: update unison/default.prf
   become: True
   template:
