@@ -23,7 +23,7 @@
   become: True
   template:
     src: default.prf
-    dest: ~/.unison/default.prf
+    dest: ~/ .unison/default.prf
 
 - name: Copy file
   become: True
