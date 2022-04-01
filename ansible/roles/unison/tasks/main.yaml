@@ -17,7 +17,7 @@
   ansible.builtin.file:
     path: ~/.unison/default.prf
     state: directory
-    mode: '0755'
+    mode: '0644'
 
 - name: update unison/default.prf
   become: true
