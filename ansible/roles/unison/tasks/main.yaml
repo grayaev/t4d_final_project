@@ -12,6 +12,13 @@
   action: service name=cron state=started
 ### path /var/www/wordpress
 
+- name: Create a directory if it does not exist
+  become: True
+  ansible.builtin.file:
+    path: ~/.unison/default.prf
+    state: directory
+    mode: '0755'
+
 - name: update unison/default.prf
   become: True
   template:
@@ -21,7 +28,7 @@
 - name: Copy file
   become: True
   ansible.builtin.copy:
-    content: unisonsync.sh
+    content: '#!/bin/bash/ \n unison /var/www/wordpress ssh://127.0.0.1//var/www/wordpress'
     dest: /usr/local/bin/unisonsync.sh
     owner: ubuntu
     group: ubuntu
