@@ -31,5 +31,3 @@
   template:
     src: wp-config.php
     dest: /var/www/wordpress/wp-config.php
-  
-########## user//5t1ah1P8RZN(q039

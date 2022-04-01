@@ -3,3 +3,9 @@
   service:
     name: nginx
     state: restarted
+    
+- name: stop nginx
+  become: true
+  service:
+    name: nginx
+    state: stoped

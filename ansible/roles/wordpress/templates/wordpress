@@ -17,4 +17,9 @@ server {
          fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
          include fastcgi_params;
     }
+    location /vhost_status {
+        vhost_traffic_status on;
+        vhost_traffic_status_display;
+        vhost_traffic_status_display_format html;
+  }
 }
