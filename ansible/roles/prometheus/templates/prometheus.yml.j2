@@ -14,7 +14,7 @@
   scrape_interval: 15s
   static_configs:
   - targets:
-{% for server in groups[prometheus_nginx_vts_group] %}
+{% for server in groups[prometheus_node_exporter_group] %}
     - {{ server }}:9913
 {% endfor %}
 {% endif %}

@@ -4,6 +4,7 @@ prometheus_scrape_interval: "30s"
 prometheus_node_exporter: true
 prometheus_node_exporter_group: "all"
 prometheus_nginx_vts_group: "webservers"
+prometheus_load_balancer_group: "load_balancer"
 prometheus_env: "production"
 prometheus_var_config:
     global:

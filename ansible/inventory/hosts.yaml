@@ -12,10 +12,10 @@ all:
                     ansible_host: 185.241.192.50
         mysql:
             hosts:
-                mysql01:
-                    ansible_host: 95.163.180.123
-                mysql02:
+                db01.project.domain:
                     ansible_host: 5.188.141.58
+                db02.project.domain:
+                    ansible_host: 87.239.109.35
                 
         monitoring:
             hosts:
@@ -27,3 +27,7 @@ all:
                     ansible_host: 37.139.33.181
                 test2:
                     ansible_host: 95.163.180.123
+        load_balancer:
+            hosts:
+                lb.project.domain:
+                    ansible_host: 89.208.220.113

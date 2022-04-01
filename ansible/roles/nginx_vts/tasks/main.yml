@@ -1,5 +1,6 @@
 ---
 - name: install binary
+  become: yes
   get_url:
     url: "{{ nginx_vts_exporter_binary_url }}"
     dest: "/usr/local/bin/"

@@ -54,7 +54,7 @@
 - name: Creating NGINX conf file
   become: yes
   template:
-    src: nginx.conf
+    src: nginx.conf.j2
     dest: "{{ nginx_conf_path }}"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
