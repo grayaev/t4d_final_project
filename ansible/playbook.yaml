@@ -16,21 +16,21 @@
   vars:
     grafana_admin_password: admin
   roles:
-    - prometheus
-    - grafana
+#    - prometheus
+#    - grafana
 
 - name: установка wordpress
-  hosts: webservers
+  hosts: all
   become: yes
   vars:
     - download_url: "http://wordpress.org/latest.tar.gz"
   roles:
-    - nginx
+#    - nginx
     - nginx_vts
-    - php5
-    - wordpress
+#    - php5
+#    - wordpress
 
-- name: установка nginx
+- name: установка nginx load_balancer
   hosts: load_balancer
   become: yes
   roles:

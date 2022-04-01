@@ -28,3 +28,8 @@
   systemd:
     name: "{{ nginx_vts_exporter_service_name }}"
     enabled: true
+    
+- name: start nginx_vts_exporter
+  ansible.builtin.service:
+    name: "{{ nginx_vts_exporter_service_name }}"
+    state: started

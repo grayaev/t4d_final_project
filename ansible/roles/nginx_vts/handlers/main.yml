@@ -1,9 +1,10 @@
 ---
 - name: reload nginx_vts_exporter unit
-  systemd:
-    daemon_reload: yes
+  ansible.builtin.service:
+    name: "{{ nginx_vts_exporter_service_name }}"
+    state: reloaded
 
 - name: restart nginx_vts_exporter service
-  systemd:
+  ansible.builtin.service:
     name: "{{ nginx_vts_exporter_service_name }}"
     state: restarted
