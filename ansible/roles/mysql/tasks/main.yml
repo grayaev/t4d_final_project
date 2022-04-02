@@ -26,6 +26,13 @@
     state: present
     check_implicit_admin: true
     login_unix_socket: /var/run/mysqld/mysqld.sock
+
+- name: Enable remote login to mysql
+  lineinfile:
+    path: /etc/mysql/mysql.conf.d/mysqld.cnf
+    regexp: '^bind-address'
+    line: 'bind-address = 0.0.0.0'
+    backup: yes
     
 - name: Start the MySQL service
   action: service name=mysql state=restarted
