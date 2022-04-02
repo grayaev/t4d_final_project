@@ -10,16 +10,23 @@
     - libpcre3-dev
     - unzip
 
+- name: search nginx folder
+  stat:
+    path: /etc/nginx
+  register: nginx
+
 - name: git nginx-vts
   ansible.builtin.git:
     repo: 'https://github.com/vozlt/nginx-module-vts.git'
     dest: /tmp/nginx-module-vts
+  when: not nginx.stat.exists
 
 - name: Downloading NGINX sources
   get_url:
     url: "{{ nginx_tarball_url }}"
     dest: "/tmp/{{ nginx_version }}.tar.gz"
   register: nginx_source
+  when: not nginx.stat.exists
 
 - name: Unpacking NGINX
   unarchive:
@@ -28,6 +35,7 @@
     src: "{{ nginx_source.dest }}"
 #  when: nginx_source.changed
   register: nginx_source_unpack
+  when: not nginx.stat.exists
 
 - name: Create required Nginx dirs
   become: yes
@@ -36,6 +44,7 @@
     state: directory
     owner: root
     mode: 0755
+  when: not nginx.stat.exists
 
 - name: Configuring NGINX source with custom modules
   command: "./configure --sbin-path={{ nginx_sbin_path }} --conf-path={{ nginx_conf_path }} {{ nginx_custom_modules }}"
@@ -43,6 +52,7 @@
     chdir: "{{ nginx_install_dir }}"
 #  when: nginx_source_unpack|changed
   register: nginx_configure
+  when: not nginx.stat.exists
 
 - name: Installing NGINX
   become: yes
@@ -50,6 +60,7 @@
   args:
     chdir: "{{ nginx_install_dir }}"
 #  when: nginx_configure|changed
+  when: not nginx.stat.exists
 
 - name: Creating NGINX conf file
   become: yes
@@ -95,3 +106,9 @@
   service:
     name: nginx
     state: started
+    
+- name: restart NGINX
+  become: yes
+  service:
+    name: nginx
+    state: restarted

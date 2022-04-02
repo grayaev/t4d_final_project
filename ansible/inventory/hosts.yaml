@@ -30,4 +30,4 @@ all:
         load_balancer:
             hosts:
                 lb.project.domain:
-                    ansible_host: 89.208.220.113
+                    ansible_host: 146.185.243.121

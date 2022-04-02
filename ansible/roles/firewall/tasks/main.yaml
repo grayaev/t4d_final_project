@@ -15,9 +15,7 @@
     service: http
     permanent: yes
     state: enabled
-  when:
-    - inventory_hostname in groups['webservers']
-    - inventory_hostname in groups['load_balancer']
+  when: inventory_hostname in groups['webservers'] or inventory_hostname in groups['load_balancer']
 
 - name: permit traffic through port 443/tcp (https)
   ansible.builtin.firewalld:
@@ -67,9 +65,7 @@
     port: 9913/tcp
     permanent: yes
     state: enabled
-  when:
-    - inventory_hostname in groups['webservers']
-    - inventory_hostname in groups['load_balancer']
+  when: inventory_hostname in groups['webservers'] or inventory_hostname in groups['load_balancer']
 
 - name: restart service firewalld
   ansible.builtin.service:
