@@ -1,6 +1,6 @@
 ---
 - name: установка роли для настройки двусторонней синхронизации
-  hosts: test
+  hosts: all
   become: yes
   roles:
     - unison

@@ -13,14 +13,12 @@
 ### path /var/www/wordpress
 
 - name: Create a directory
-  become: true
   ansible.builtin.file:
     path: ~/.unison/default.prf
     state: directory
     mode: '0755'
 
 - name: update unison/default.prf
-  become: true
   template:
     src: default.prf
     dest: ~/.unison/default.prf
@@ -28,11 +26,11 @@
 - name: Copy file
   become: true
   ansible.builtin.copy:
-    content: "#!/bin/bash/ \n unison /var/www/wordpress ssh://127.0.0.1//var/www/wordpress"
+    content: "#!/bin/bash \n unison /var/www/wordpress ssh://10.1.0.4//var/www/wordpress -auto -batch"
     dest: /usr/bin/unisonsync.sh
     mode: '0755'
 
-- name: Performs synchronization every 5 minutes
+- name: Performs synchronization every 1 minutes
   ansible.builtin.cron:
     name: unisonsync
     minute: "*/5"
