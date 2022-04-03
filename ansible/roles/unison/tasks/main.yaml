@@ -14,31 +14,40 @@
 ### path /var/www/wordpress
 
 - name: enable open ssh
-  action: service name=ssh state=enable
+  become: true
+  action: service name=sshd state=started
 
 - name: Create ssh key
   become: true
-  ansible.builtin.command: ssh-keygen -t rsa
+  command: ssh-keygen -q -t rsa -f .ssh/ssh_host_rsa_key -C "" -N ""
+  args:
+    creates: .ssh/ssh_host_rsa_key
 
-- name: Copy ssh key
-  become: true
-  ansible.builtin.command: ssh-copy-id ubuntu@127.0.0.1 #add ip address serv example ssh-copy-id username@remote_host
+#- name: Copy ssh key
+#  ansible.posix.authorized_key:
+#    user: ubuntu
+#    state: present
+#    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+
+  #become: true
+  #command: ssh-copy-id ubuntu@109.120.181.30 #add ip address serv example ssh-copy-id username@remote_host
 
 - name: Create a directory
   ansible.builtin.file:
-    path: ~/.unison/default.prf
+    path: ~/.unison/
     state: directory
     mode: '0755'
 
 - name: update unison/default.prf
-  template:
-    content: 'auto = true \n batch = true'
+  become: true
+  ansible.builtin.copy:
+    content: "auto = true\nbatch = true"
     dest: ~/.unison/default.prf
 
 - name: Copy file
   become: true
   ansible.builtin.copy:
-    content: '#!/bin/bash \n unison /var/www/wordpress ssh://10.1.0.4//var/www/wordpress'
+    content: "#!/bin/bash\nunison /var/www/wordpress ssh://109.120.181.30//var/www/wordpress"
     dest: /usr/bin/unisonsync.sh
     mode: '0755'
 
