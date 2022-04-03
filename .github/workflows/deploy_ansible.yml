@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run Ansible playbook
-        uses: dawidd6/action-ansible-playbook@v2.5.0
+        uses: grayaev/t4d_final_project
         with:
           playbook: ansible/playbook.yaml # path to your Ansible playbook
           directory: ./
