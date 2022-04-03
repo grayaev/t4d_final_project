@@ -7,7 +7,7 @@
     - unison
     - unison-all
     - cron
-    - openssh-server
+
 
 - name: enable cron
   action: service name=cron state=started
@@ -16,21 +16,6 @@
 - name: enable open ssh
   become: true
   action: service name=sshd state=started
-
-- name: Create ssh key
-  become: true
-  command: ssh-keygen -q -t rsa -f .ssh/ssh_host_rsa_key -C "" -N ""
-  args:
-    creates: .ssh/ssh_host_rsa_key
-
-#- name: Copy ssh key
-#  ansible.posix.authorized_key:
-#    user: ubuntu
-#    state: present
-#    key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
-
-  #become: true
-  #command: ssh-copy-id ubuntu@109.120.181.30 #add ip address serv example ssh-copy-id username@remote_host
 
 - name: Create a directory
   ansible.builtin.file:
