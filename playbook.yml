@@ -8,7 +8,7 @@
   roles:
     - default_packages
     - access
-#    - firewall
+    - firewall
     - node_exporter
 
 - name: установка mysql
@@ -34,10 +34,10 @@
   vars:
     - download_url: "http://wordpress.org/latest.tar.gz"
   roles:
-#    - nginx
-#    - nginx_vts
-#    - php5
-#    - wordpress
+    - nginx
+    - nginx_vts
+    - php5
+    - wordpress
 
 - name: установка nginx load_balancer
   hosts: load_balancer
