@@ -26,7 +26,7 @@ jobs:
           mkdir .ssh
           echo "$DO_SSH_KEY" > .ssh/id_rsa
           chmod 600 .ssh/id_rsa
-          echo db_user : "$DB_USER" >> roles/mysql/defaults/main.yml
+          echo db_user01 : "$DB_USER" >> roles/mysql/defaults/main.yml
           echo db_pass : "$DB_PASS" >> roles/mysql/defaults/main.yml
       - name: run exporters playbook
         run: |
