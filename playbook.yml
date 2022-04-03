@@ -14,8 +14,8 @@
 - name: установка mysql
   hosts: mysql
   become: yes
-#  vars:
-#    db_user: "{{ lookup('env', '$DB_USER' }}"
+  vars:
+    db_user: "{{ db_user01 }}"
 #    db_pass: "{{ lookup('env', '$DB_PASS' }}"
     #"5t1ah1P8RZN(q039"
   roles:
