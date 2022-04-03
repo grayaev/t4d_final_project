@@ -20,12 +20,12 @@ all:
             hosts:
                 monitoring.project.domain:
                     ansible_host: 89.208.85.81
-        test:
-            hosts:
-                test:
-                    ansible_host: 37.139.33.181
-                test2:
-                    ansible_host: 95.163.180.123
+#        test:
+#            hosts:
+#                test:
+#                    ansible_host: 37.139.33.181
+#                test2:
+#                    ansible_host: 95.163.180.123
         load_balancer:
             hosts:
                 lb.project.domain:
