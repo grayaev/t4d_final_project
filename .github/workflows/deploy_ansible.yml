@@ -20,14 +20,12 @@ jobs:
       - name: set ansible config secrets
         env:
           DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
-          DB_USER: ${{ secrets.DB_USER }}
-          DB_PASS: ${{ secrets.DB_PASS }}
+          DB_SECRET: ${{ secrets.DB_SECRET }}
         run: |
           mkdir .ssh
           echo "$DO_SSH_KEY" > .ssh/id_rsa
           chmod 600 .ssh/id_rsa
-          echo db_user01 : "$DB_USER" >> roles/mysql/defaults/main.yml
-          echo db_pass : "$DB_PASS" >> roles/mysql/defaults/main.yml
+          echo "$DB_SECRET" > roles/mysql/defaults/main.yml
       - name: run exporters playbook
         run: |
           ansible-playbook -i inventory playbook.yml
