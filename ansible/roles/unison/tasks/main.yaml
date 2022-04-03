@@ -7,10 +7,22 @@
     - unison
     - unison-all
     - cron
+    - openssh-server
 
 - name: enable cron
   action: service name=cron state=started
 ### path /var/www/wordpress
+
+- name: enable open ssh
+  action: service name=ssh state=enable
+
+- name: Create ssh key
+  become: true
+  ansible.builtin.command: ssh-keygen -t rsa
+
+- name: Copy ssh key
+  become: true
+  ansible.builtin.command: ssh-copy-id ubuntu@127.0.0.1 #add ip address serv example ssh-copy-id username@remote_host
 
 - name: Create a directory
   ansible.builtin.file:
@@ -20,19 +32,19 @@
 
 - name: update unison/default.prf
   template:
-    src: default.prf
+    content: 'auto = true \n batch = true'
     dest: ~/.unison/default.prf
 
 - name: Copy file
   become: true
   ansible.builtin.copy:
-    content: "#!/bin/bash \n unison /var/www/wordpress ssh://10.1.0.4//var/www/wordpress -auto -batch"
+    content: '#!/bin/bash \n unison /var/www/wordpress ssh://10.1.0.4//var/www/wordpress'
     dest: /usr/bin/unisonsync.sh
     mode: '0755'
 
 - name: Performs synchronization every 1 minutes
   ansible.builtin.cron:
     name: unisonsync
-    minute: "*/5"
+    minute: "*/1"
     user: ubuntu
     job: "/usr/bin/unisonsync.sh"
