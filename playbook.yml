@@ -29,7 +29,7 @@
     - grafana
 
 - name: установка wordpress
-  hosts: all
+  hosts: webservers
   become: yes
   vars:
     - download_url: "http://wordpress.org/latest.tar.gz"
