@@ -24,7 +24,7 @@
   mysql_db:
     name: wordpress
     state: present
-    check_implicit_admin: true
+    #check_implicit_admin: true
     login_unix_socket: /var/run/mysqld/mysqld.sock
 
 - name: Enable remote login to mysql
