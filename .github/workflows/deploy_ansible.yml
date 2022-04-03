@@ -20,6 +20,8 @@ jobs:
       - name: set ansible config secrets
         env:
           DO_SSH_KEY: ${{ secrets.DO_SSH_KEY }}
+          DB_USER: ${{ secrets.DB_USER }}
+          DB_PASS: ${{ secrets.DB_PASS }}
         run: |
           mkdir .ssh
           echo "$DO_SSH_KEY" > .ssh/id_rsa
