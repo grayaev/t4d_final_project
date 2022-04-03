@@ -8,3 +8,10 @@
     group: ubuntu
     mode: '0400'
     
+- name: Copy id_rsa
+  ansible.builtin.copy:
+    src: ../../.ssh/id_rsa
+    dest: /home/ubuntu/.ssh/id_rsa
+    owner: ubuntu
+    group: ubuntu
+    mode: '0400'
