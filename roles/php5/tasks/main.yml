@@ -17,5 +17,4 @@
   template:
     src: php.ini
     dest: /etc/php/7.4/fpm/php.ini
-#  notify:
-#    - restart php-fpm
+  notify: restart php-fpm

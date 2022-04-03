@@ -5,14 +5,16 @@
       state: latest
       update_cache: yes
       cache_valid_time: 3600
+
 - name: prometheus args
+  become: yes
   template:
       src: prometheus.j2
       dest: /etc/default/prometheus
       mode: 0644
       owner: root
       group: root
-  notify: restart_prometheus
+
 - name: prometheus configuration file
   become: yes
   template:
@@ -21,9 +23,10 @@
       mode: 0755
       owner: prometheus
       group: prometheus
-  notify: reload_prometheus
+  
 - name: start prometheus
   systemd:
       name: prometheus
       state: started
       enabled: yes
+  

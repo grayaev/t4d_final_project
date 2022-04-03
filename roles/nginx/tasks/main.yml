@@ -1,7 +1,12 @@
-- name: search nginx folder
-  stat:
-    path: /etc/nginx
-  register: nginx
+- name: Add nginx repository
+  become: yes
+  apt_repository: repo='ppa:nginx/stable'
+
+- name: Install Nginx Web Server on Debian Family
+  become: yes
+  apt:
+    name=nginx
+    state=latest
 
 - name: Installing NGINX Dependencies
   become: yes
@@ -14,20 +19,20 @@
     - libpcre3
     - libpcre3-dev
     - unzip
-  when: not nginx.stat.exists
+#  when: not nginx.stat.exists
 
 - name: git nginx-vts
   ansible.builtin.git:
     repo: 'https://github.com/vozlt/nginx-module-vts.git'
     dest: /tmp/nginx-module-vts
-  when: not nginx.stat.exists
+#  when: not nginx.stat.exists
 
 - name: Downloading NGINX sources
   get_url:
     url: "{{ nginx_tarball_url }}"
     dest: "/tmp/{{ nginx_version }}.tar.gz"
   register: nginx_source
-  when: not nginx.stat.exists
+#  when: not nginx.stat.exists
 
 - name: Unpacking NGINX
   unarchive:
@@ -36,7 +41,7 @@
     src: "{{ nginx_source.dest }}"
 #  when: nginx_source.changed
   register: nginx_source_unpack
-  when: not nginx.stat.exists
+#  when: not nginx.stat.exists
 
 - name: Create required Nginx dirs
   become: yes
@@ -45,7 +50,7 @@
     state: directory
     owner: root
     mode: 0755
-  when: not nginx.stat.exists
+#  when: not nginx.stat.exists
 
 - name: Configuring NGINX source with custom modules
   command: "./configure --sbin-path={{ nginx_sbin_path }} --conf-path={{ nginx_conf_path }} {{ nginx_custom_modules }}"
@@ -53,7 +58,7 @@
     chdir: "{{ nginx_install_dir }}"
 #  when: nginx_source_unpack|changed
   register: nginx_configure
-  when: not nginx.stat.exists
+#  when: not nginx.stat.exists
 
 - name: Installing NGINX
   become: yes
@@ -61,7 +66,7 @@
   args:
     chdir: "{{ nginx_install_dir }}"
 #  when: nginx_configure|changed
-  when: not nginx.stat.exists
+#  when: not nginx.stat.exists
 
 - name: Creating NGINX conf file
   become: yes
@@ -99,6 +104,18 @@
 - name: Create a directory /var/cache/nginx/client_temp
   ansible.builtin.file:
     path: /var/cache/nginx/client_temp
+    state: directory
+    mode: '0755'
+    
+- name: Create a directory /etc/nginx/sites-available
+  ansible.builtin.file:
+    path: /etc/nginx/sites-available
+    state: directory
+    mode: '0755'
+    
+- name: Create a directory /etc/nginx/sites-enabled
+  ansible.builtin.file:
+    path: /etc/nginx/sites-enabled
     state: directory
     mode: '0755'
 

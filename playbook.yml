@@ -17,13 +17,12 @@
   roles:
     - mysql
 
-- name: настройка сервера мониторинга
-  hosts: monitoring
-  vars:
-    grafana_admin_password: admin
+- name: установка nginx load_balancer
+  hosts: load_balancer
+  become: yes
   roles:
-    - prometheus
-    - grafana
+    - load_balancer
+    - nginx_vts
 
 - name: установка wordpress
   hosts: webservers
@@ -36,9 +35,10 @@
     - php5
     - wordpress
 
-- name: установка nginx load_balancer
-  hosts: load_balancer
-  become: yes
+- name: настройка сервера мониторинга
+  hosts: monitoring
+  vars:
+    grafana_admin_password: admin
   roles:
-    - load_balancer
-    - nginx_vts
+    - prometheus
+    - grafana

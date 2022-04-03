@@ -28,15 +28,15 @@
     state: "directory"
     owner: "www-data"
     group: "www-data"
-    mode: "0755"
+    mode: "0777"
   when: not wordpress.stat.exists
 
 - name: unpack WordPress installation
   shell: "tar xvfz /tmp/latest.tar.gz -C /var/www/ && chown -R www-data:www-data /var/www/wordpress"
   when: not wordpress.stat.exists
 
-- name: update wp-config
-  become: yes
-  template:
-    src: wp-config.php
-    dest: /var/www/wordpress/wp-config.php
+#- name: update wp-config
+#  become: yes
+#  template:
+#    src: wp-config.php
+#    dest: /var/www/wordpress/wp-config.php

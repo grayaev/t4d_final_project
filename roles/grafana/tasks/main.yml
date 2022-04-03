@@ -5,6 +5,7 @@
   register: grafana
 
 - name: install gpg
+  become: yes
   apt:
     name: gnupg,software-properties-common
     state: present
@@ -13,12 +14,14 @@
   when: not grafana.stat.exists
 
 - name: add gpg hey
+  become: yes
   apt_key:
     url: "https://packages.grafana.com/gpg.key"
     validate_certs: no
   when: not grafana.stat.exists
 
 - name: add repository
+  become: yes
   apt_repository:
     repo: "deb https://packages.grafana.com/oss/deb stable main"
     state: present
@@ -35,6 +38,7 @@
   when: not grafana.stat.exists
     
 - name: start service grafana-server
+  become: yes
   systemd:
     name: grafana-server
     state: started
