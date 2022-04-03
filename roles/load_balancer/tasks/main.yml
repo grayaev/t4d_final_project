@@ -1,3 +1,8 @@
+- name: search nginx folder
+  stat:
+    path: /etc/nginx
+  register: nginx
+
 - name: Installing NGINX Dependencies
   become: yes
   apt:
@@ -9,11 +14,7 @@
     - libpcre3
     - libpcre3-dev
     - unzip
-
-- name: search nginx folder
-  stat:
-    path: /etc/nginx
-  register: nginx
+  when: not nginx.stat.exists
 
 - name: git nginx-vts
   ansible.builtin.git:
@@ -100,6 +101,7 @@
     path: /var/cache/nginx/client_temp
     state: directory
     mode: '0755'
+  when: not nginx.stat.exists
 
 - name: Starting NGINX
   become: yes
