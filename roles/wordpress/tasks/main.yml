@@ -1,4 +1,9 @@
 ---
+- name: search wordpress
+  stat:
+    path: /var/www/wordpress/wp-config.php
+  register: wordpress
+  
 - name: install nginx config
   become: yes
   template:
@@ -15,6 +20,7 @@
   get_url:
     url: "{{ download_url }}"
     dest: "/tmp/latest.tar.gz"
+  when: not wordpress.stat.exists
 
 - name: creating directory for WordPress
   file:
@@ -22,10 +28,12 @@
     state: "directory"
     owner: "www-data"
     group: "www-data"
+  when: not wordpress.stat.exists
 
 - name: unpack WordPress installation
   shell: "tar xvfz /tmp/latest.tar.gz -C /var/www/ && chown -R www-data:www-data /var/www/wordpress"
-  
+  when: not wordpress.stat.exists
+
 - name: update wp-config
   become: yes
   template:
