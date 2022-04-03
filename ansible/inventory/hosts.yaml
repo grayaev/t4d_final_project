@@ -16,7 +16,6 @@ all:
                     ansible_host: 5.188.141.58
                 db02.project.domain:
                     ansible_host: 87.239.109.35
-                
         monitoring:
             hosts:
                 monitoring.project.domain:
