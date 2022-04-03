@@ -1,4 +1,9 @@
 ---
+- name: search mysql
+  stat:
+    path: /usr/sbin/mysqld
+  register: mysql
+  
 - name: Install MySQL
   apt:
     name: "{{ item }}"
@@ -6,9 +11,12 @@
   with_items:
     - python3-mysqldb
     - mysql-server-8.0
+  when: not mysql.stat.exists
+
 
 - name: Start the MySQL service
   action: service name=mysql state=started
+  when: not mysql.stat.exists
   
 - name: create user mysql
   mysql_user:
@@ -19,6 +27,7 @@
     state: present
     check_implicit_admin: true
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  when: not mysql.stat.exists
     
 - name: Create a new database
   mysql_db:
@@ -26,6 +35,7 @@
     state: present
     check_implicit_admin: true
     login_unix_socket: /var/run/mysqld/mysqld.sock
+  when: not mysql.stat.exists
 
 - name: Enable remote login to mysql
   lineinfile:
@@ -33,6 +43,8 @@
     regexp: '^bind-address'
     line: 'bind-address = 0.0.0.0'
     backup: yes
+  when: not mysql.stat.exists
     
 - name: Start the MySQL service
   action: service name=mysql state=restarted
+  when: not mysql.stat.exists
