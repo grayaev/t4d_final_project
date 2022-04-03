@@ -10,8 +10,8 @@ http {
         vhost_traffic_status_zone;
 
 		upstream webservers {
-            server 10.0.0.22 max_fails=3 fail_timeout=5s;
-            server 10.0.0.28 max_fails=3 fail_timeout=5s;
+            server 10.0.1.20 max_fails=3 fail_timeout=5s;
+            server 10.0.0.37 max_fails=3 fail_timeout=5s;
 		}
 
         sendfile on;
