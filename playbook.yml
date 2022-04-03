@@ -6,10 +6,10 @@
     node_exporter_version: 1.1.2
     grafana_admin_password: admin
   roles:
-#    - default_packages
-#    - access
-#    - firewall
-#    - node_exporter
+    - default_packages
+    - access
+    - firewall
+    - node_exporter
 
 - name: установка mysql
   hosts: mysql
@@ -26,8 +26,8 @@
   vars:
     grafana_admin_password: admin
   roles:
-#    - prometheus
-#    - grafana
+    - prometheus
+    - grafana
 
 - name: установка wordpress
   hosts: webservers
@@ -35,14 +35,14 @@
   vars:
     - download_url: "http://wordpress.org/latest.tar.gz"
   roles:
-#    - nginx
-#    - nginx_vts
-#    - php5
-#    - wordpress
+    - nginx
+    - nginx_vts
+    - php5
+    - wordpress
 
 - name: установка nginx load_balancer
   hosts: load_balancer
   become: yes
   roles:
-#    - load_balancer
-#    - nginx_vts
+    - load_balancer
+    - nginx_vts
