@@ -28,6 +28,7 @@
     state: "directory"
     owner: "www-data"
     group: "www-data"
+    mode: "0755"
   when: not wordpress.stat.exists
 
 - name: unpack WordPress installation
