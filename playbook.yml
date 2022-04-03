@@ -8,7 +8,7 @@
   roles:
     - default_packages
     - access
-    - firewall
+#    - firewall
     - node_exporter
 
 - name: установка mysql
