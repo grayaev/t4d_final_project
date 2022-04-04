@@ -33,13 +33,14 @@
 - name: Copy file
   become: true
   ansible.builtin.copy:
-    content: "#!/bin/bash\nunison /var/www/wordpress ssh://10.0.1.20//var/www/wordpress" # указать внутренний адрес слейва
-    dest: /usr/bin/unisonsync.sh
+    content: "#!/bin/bash\nunison localhost//var/www/wordpress ssh://10.0.1.20//var/www/wordpress -auto -batch" # указать внутренний адрес слейва
+    dest: /usr/local/bin/unisonsync.sh
     mode: '0755'
 
 - name: Performs synchronization every 1 minutes
+  become: true
   ansible.builtin.cron:
     name: unisonsync
     minute: "*/1"
     user: ubuntu
-    job: "/usr/bin/unisonsync.sh"
+    job: "/usr/local/bin/unisonsync.sh"
