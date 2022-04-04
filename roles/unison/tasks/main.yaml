@@ -1,0 +1,43 @@
+---
+- name: Install unison
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - unison
+    - unison-all
+    - cron
+
+- name: enable cron
+  action: service name=cron state=started
+### path /var/www/wordpress
+
+#- name: enable open ssh
+#  become: true
+#  action: service name=sshd state=started
+
+- name: Create a directory
+  ansible.builtin.file:
+    path: ~/.unison/
+    state: directory
+    mode: '0755'
+
+- name: update unison/default.prf
+  become: true
+  ansible.builtin.copy:
+    content: "auto = true\nbatch = true"
+    dest: ~/.unison/default.prf
+
+- name: Copy file
+  become: true
+  ansible.builtin.copy:
+    content: "#!/bin/bash\nunison /var/www/wordpress ssh://10.0.1.20//var/www/wordpress" # указать внутренний адрес слейва
+    dest: /usr/bin/unisonsync.sh
+    mode: '0755'
+
+- name: Performs synchronization every 1 minutes
+  ansible.builtin.cron:
+    name: unisonsync
+    minute: "*/1"
+    user: ubuntu
+    job: "/usr/bin/unisonsync.sh"

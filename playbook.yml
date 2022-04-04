@@ -38,7 +38,12 @@
 - name: настройка сервера мониторинга
   hosts: monitoring
   vars:
-    grafana_admin_password: admin
   roles:
     - prometheus
     - grafana
+
+- name: настройка синхронизации и бэкапов
+  hosts: app01.project.domain #указать имя мастер ноды для синхронизации wp
+  vars:
+  roles:
+    - unison
