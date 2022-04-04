@@ -44,7 +44,7 @@
   hosts: webservers
   roles:
     - unison
-    
+
 - name: настройка бэкапов
   hosts: backup
   roles:
