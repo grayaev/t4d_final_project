@@ -4,7 +4,7 @@ After=nginx.service
 
 [Service]
 Type=forking
-User={{ nginx_vts_exporter_service_user|default('www-data') }}
+User={{ nginx_vts_exporter_service_user|default('ubuntu') }}
 {% if nginx_vts_exporter_service_group is defined %}Group={{ nginx_vts_exporter_service_group }}
 {% endif %}
 RuntimeDirectory={{ nginx_vts_exporter_service_name }}

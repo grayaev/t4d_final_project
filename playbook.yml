@@ -4,7 +4,6 @@
   become: yes
   vars:
     node_exporter_version: 1.1.2
-    grafana_admin_password: admin
   roles:
     - default_packages
     - access
@@ -37,13 +36,11 @@
 
 - name: настройка сервера мониторинга
   hosts: monitoring
-  vars:
   roles:
     - prometheus
     - grafana
 
 - name: настройка синхронизации и бэкапов
-  hosts: app01.project.domain #указать имя мастер ноды для синхронизации wp
-  vars:
+  hosts: webservers
   roles:
     - unison

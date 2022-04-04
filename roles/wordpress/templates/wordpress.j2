@@ -3,7 +3,7 @@ server {
     listen [::]:80;
     root /var/www/wordpress;
     index  index.php index.html index.htm;
-    server_name  _;
+    server_name  {{ url_site }};
 
     client_max_body_size 100M;
     autoindex off;

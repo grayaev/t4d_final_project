@@ -24,9 +24,9 @@
       owner: prometheus
       group: prometheus
   
-- name: start prometheus
+- name: restart prometheus
+  become: true
   systemd:
       name: prometheus
-      state: started
+      state: restarted
       enabled: yes
-  
