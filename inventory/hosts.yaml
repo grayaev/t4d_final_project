@@ -6,6 +6,7 @@ all:
         master: "10.0.0.18" #app01
         slave: "10.0.0.8" #app02
         url_site: "89.208.229.252" #website или адрес балансировщика
+        db_mysql: "10.0.0.21"
     children:
         webservers:
             hosts:
@@ -25,3 +26,7 @@ all:
             hosts:
                 loadbalancer:
                     ansible_host: 89.208.229.252
+        backup:
+            hosts:
+                backup:
+                    ansible_host: 5.188.142.17

@@ -1,0 +1,59 @@
+- name: add shh known_hosts master
+  shell: ssh -oStrictHostKeyChecking=no ubuntu@{{ master }} 'exit'
+  
+- name: add shh known_hosts db_mysql
+  shell: ssh -oStrictHostKeyChecking=no ubuntu@{{ db_mysql }} 'exit'
+
+- name: install cron service
+  become: yes
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - cron
+    - mysql-client
+    
+
+      
+- name: enable cron
+  action: service name=cron state=started
+ 
+- name: Create backup directory
+  become: true
+  ansible.builtin.file:
+    path: /backup
+    state: directory
+    owner: ubuntu
+    mode: '0777'
+    
+- name: copy sqr mysql
+  become: yes
+  template:
+    src: backup_mysql.sh.j2
+    dest: /backup/backup_mysql.sh
+    owner: ubuntu
+    mode: '0777'
+
+- name: copy sqr wordpress
+  become: yes
+  template:
+    src: backup_wordpress.sh.j2
+    dest: /backup/backup_wordpress.sh
+    owner: ubuntu
+    mode: '0777'
+    
+- name: arch mysql every day 04:00
+  become: true
+  ansible.builtin.cron:
+    name: backup_mysql
+    hour: "4"
+    user: ubuntu
+    job: "/backup/backup_mysql.sh"
+    
+- name: arch mysql every day 04:00
+  become: true
+  ansible.builtin.cron:
+    name: backup_wordpress
+    hour: "4"
+    user: ubuntu
+    job: "/backup/backup_wordpress.sh"

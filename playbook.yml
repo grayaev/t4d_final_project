@@ -40,7 +40,12 @@
     - prometheus
     - grafana
 
-- name: настройка синхронизации и бэкапов
+- name: настройка синхронизации
   hosts: webservers
   roles:
     - unison
+    
+- name: настройка бэкапов
+  hosts: backup
+  roles:
+    - backup
