@@ -18,8 +18,9 @@
 #  action: service name=sshd state=started
 
 - name: Create a directory
+  become: true
   ansible.builtin.file:
-    path: ~/.unison/
+    path: /home/ubuntu/.unison/
     state: directory
     mode: '0755'
 
@@ -27,7 +28,7 @@
   become: true
   ansible.builtin.copy:
     content: "auto = true\nbatch = true"
-    dest: ~/.unison/default.prf
+    dest: /home/ubuntu/.unison/default.prf
 
 - name: Copy file
   become: true
