@@ -38,8 +38,8 @@
   
 - name: Copy file
   become: true
-  ansible.builtin.copy:
-    content: "#!/bin/bash\nunison /var/www/wordpress ssh://{{ slave }}//var/www/wordpress -auto -batch"
+  template:
+    src: unisonsync.j2
     dest: /usr/local/bin/unisonsync.sh
     mode: '0755'
 

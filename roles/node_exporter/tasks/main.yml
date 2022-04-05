@@ -33,7 +33,7 @@
     owner: root
     group: root
     mode: 0600
-  when: not node_exporter.stat.exists
+#  when: not node_exporter.stat.exists
   
 - name: configure systemd to use service
   systemd:

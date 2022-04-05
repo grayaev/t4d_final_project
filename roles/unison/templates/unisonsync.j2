@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Adjust as needed.
+TEXTFILE_COLLECTOR_DIR=/var/tmp/
+# Note the start time of the script.
+START="$(date +%s)"
+
+# Your code goes here.
+unison /var/www/wordpress ssh://{{ slave }}//var/www/wordpress -auto -batch
+
+# Write out metrics to a temporary file.
+END="$(date +%s)"
+cat << EOF > "$TEXTFILE_COLLECTOR_DIR/unison.prom.$$"
+myscript_duration_seconds $(($END - $START))
+myscript_last_run_seconds $END
+EOF
+
+# Rename the temporary file atomically.
+# This avoids the node exporter seeing half a file.
+mv "$TEXTFILE_COLLECTOR_DIR/unison.prom.$$" \
+  "$TEXTFILE_COLLECTOR_DIR/unison.prom"
