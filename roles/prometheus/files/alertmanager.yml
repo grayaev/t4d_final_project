@@ -1,0 +1,14 @@
+global:
+
+# catch-all route to receive and handle all incoming alerts
+route:
+    group_by: ['alertname']
+    group_wait: 10s       # wait up to 10s for more alerts to group them
+    receiver: 'telepush'  # see below
+
+# telepush configuration here
+receivers:
+    - name: 'telepush'
+      webhook_configs:
+          - url: 'https://telepush.dev/api/inlets/alertmanager/5194189906:AAF6rsCetWxbwaECPICclTNqne95lUN6miE'    # add your Telepush token here
+            http_config:

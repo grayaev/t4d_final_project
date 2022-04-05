@@ -46,9 +46,9 @@
     permanent: yes
     state: enabled
 
-- name: permit traffic through port 9090tcp (prometheus)
+- name: permit traffic through port 9090tcp (prometheus/alertmanager)
   ansible.posix.firewalld:
-    port: 9090/tcp
+    port: 9090-9094/tcp
     permanent: yes
     state: enabled
   when: inventory_hostname in groups['monitoring']

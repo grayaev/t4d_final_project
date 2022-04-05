@@ -1,0 +1,11 @@
+groups:
+- name: rules
+  rules:
+    - alert: PrometheusTargetMissing
+      expr: up{job="node_exporter"} == 0
+      for: 0m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Сервис node_exporter на сервере {{ $labels.instance }} недоступен"
+        description: "Возможно сервис node_exporter упал или сервер недоступен\n VALUE = {{ $value }}\n LABELS = {{ $labels }}"
