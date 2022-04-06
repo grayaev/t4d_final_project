@@ -38,6 +38,7 @@
   hosts: monitoring
   roles:
     - prometheus
+    - alertmanager
     - grafana
 
 - name: настройка синхронизации

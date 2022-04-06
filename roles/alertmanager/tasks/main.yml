@@ -1,0 +1,92 @@
+- name: create group alertmanager
+  become: yes
+  ansible.builtin.group:
+    name: alertmanager
+    state: present
+
+- name: create user
+  become: yes
+  ansible.builtin.user:
+    name: alertmanager
+    group: alertmanager
+
+- name: download alertmanager
+  get_url:
+    url: "https://github.com/prometheus/alertmanager/releases/download/v0.24.0/alertmanager-0.24.0.linux-amd64.tar.gz"
+    dest: "/tmp/alertmanager-0.24.0.linux-amd64.tar.gz"
+
+- name: unarchive alertmanager
+  unarchive:
+    remote_src: yes
+    src: "/tmp/alertmanager-0.24.0.linux-amd64.tar.gz"
+    dest: /tmp
+
+- name: move amtool to /usr/local/bin
+  become: yes
+  copy:
+    src: "/tmp/alertmanager-0.24.0.linux-amd64/amtool"
+    dest: "/usr/local/bin/amtool"
+    owner: alertmanager
+    group: alertmanager
+    remote_src: yes
+    mode: 0755
+
+- name: move alertmanager to /usr/local/bin
+  become: true
+  copy:
+    src: "/tmp/alertmanager-0.24.0.linux-amd64/alertmanager"
+    dest: "/usr/local/bin/alertmanager"
+    owner: alertmanager
+    group: alertmanager
+    remote_src: yes
+    mode: 0755
+
+- name: move alertmanager.yml to /etc/prometheus
+  become: true
+  copy:
+    src: alertmanager.yml
+    dest: "/etc/prometheus/alertmanager.yml"
+    owner: alertmanager
+    group: alertmanager
+    mode: 0755
+    
+- name: Create backup directory
+  become: true
+  ansible.builtin.file:
+    path: "/data/alertmanager"
+    state: directory
+    owner: alertmanager
+    group: alertmanager
+    mode: '0777'
+    
+- name: copy alertmanager.service
+  become: yes
+  copy:
+    src: alertmanager.service
+    dest: "/lib/systemd/system/alertmanager.service"
+    
+- name: copy rules.yml
+  become: yes
+  copy:
+    src: rules.yml
+    dest: "/etc/prometheus/rules.yml"
+    mode: '0777'
+
+- name: enable alertmanager
+  ansible.builtin.service:
+    name: alertmanager
+    enabled: yes
+
+- name: alertmanager started
+  become: yes
+  systemd:
+    name: alertmanager
+    state: restarted
+    enabled: yes
+    
+#- name: alertmanager enabled
+#  become: yes
+#  systemd:
+#    name: alertmanager
+#    state: enabled
+#    enabled: yes

@@ -5,13 +5,7 @@
     state: latest
     update_cache: yes
     cache_valid_time: 3600
-      
-- name: install prometheus-alertmanager
-  become: yes
-  apt:
-    name: prometheus-alertmanager
-    update_cache: yes
-
+    
 - name: prometheus args
   become: yes
   template:
@@ -29,31 +23,10 @@
     mode: 0755
     owner: prometheus
     group: prometheus
-      
-- name: rules alertmanager configuration file
-  become: yes
-  copy:
-    src: rules.yml
-    dest: "{{ prometheus_dir_configuration }}/rules.yml"
-    mode: 0755
-    
-- name: alert configuration file
-  become: yes
-  copy:
-    src: alertmanager.yml
-    dest: "{{ prometheus_dir_configuration }}/alertmanager.yml"
-    mode: 0755
-  
+
 - name: restart prometheus
   become: true
   systemd:
     name: prometheus
-    state: restarted
-    enabled: yes
-    
-- name: restart prometheus
-  become: true
-  systemd:
-    name: prometheus-alertmanager
     state: restarted
     enabled: yes
