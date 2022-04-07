@@ -1,0 +1,12 @@
+#!/bin/bash
+IFS=$(ls -r /backup/dbbackup/  | sed -n 1p | sed 's/^\(..\).*/\1/')
+message='node_directory_size_bytes{directory="/backup/dbbackup/"}'
+send="${message} ${IFS}"
+
+SEC=$(ls -r /backup/wp/  | sed -n 1p | sed 's/^\(..\).*/\1/')
+msg='node_directory_size_bytes{directory="/backup/wp/"}'
+sen2="${msg} ${SEC}"
+
+
+echo "$send" > /var/tmp/directory_size.prom
+echo "$sen2" >> /var/tmp/directory_size.prom

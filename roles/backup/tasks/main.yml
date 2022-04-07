@@ -13,8 +13,6 @@
     - cron
     - mysql-client
     
-
-      
 - name: enable cron
   action: service name=cron state=started
  
@@ -42,6 +40,14 @@
     owner: ubuntu
     mode: '0777'
     
+- name: copy synq wordpress
+  become: yes
+  template:
+    src: directory_equal.sh.j2
+    dest: /backup/directory_equal.sh
+    owner: ubuntu
+    mode: '0777'
+    
 - name: arch mysql every day 04:00
   become: true
   ansible.builtin.cron:
@@ -57,3 +63,34 @@
     hour: "4"
     user: ubuntu
     job: "/backup/backup_wordpress.sh"
+    
+- name: copy metrica_backup
+  become: yes
+  template:
+    src: metrica_backup.sh.j2
+    dest: /backup/metrica_backup.sh
+    owner: ubuntu
+    mode: '0777'
+    
+- name: cron metrica_backup
+  become: true
+  ansible.builtin.cron:
+    name: metrica_backup
+    hour: "*/1"
+    user: ubuntu
+    job: "/backup/metrica_backup.sh"
+    
+- name: cron wordpress_synq
+  become: true
+  ansible.builtin.cron:
+    name: metrica_backup
+    hour: "*/1"
+    user: ubuntu
+    job: "/backup/directory_equal.sh"
+    
+- name: restart node_exporter
+  become: true
+  systemd:
+    name: node_exporter
+    state: restarted
+    enabled: yes

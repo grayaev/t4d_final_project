@@ -1,0 +1,11 @@
+#!/bin/bash
+### собираем переменные количество бит на разных серверах
+IFS=$(ssh -oStrictHostKeyChecking=no ubuntu@{{ master }} 'du -sb /var/www/wordpress/ | sed s/[^0-9]//g')
+SEC=$(ssh -oStrictHostKeyChecking=no ubuntu@{{ slave }} 'du -sb /var/www/wordpress/ | sed s/[^0-9]//g')
+
+
+if [ "$IFS" = "$SEC" ]; then
+        echo 'node_directory_equal{directory="/var/www/wordpress"} 1' > /var/tmp/directory_synq.prom
+else
+        echo 'node_directory_equal{directory="/var/www/wordpress"} 0' > /var/tmp/directory_synq.prom
+fi

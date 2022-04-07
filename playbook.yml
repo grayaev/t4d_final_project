@@ -1,50 +1,50 @@
----
-- name: установка стандартных утилит на все сервера
-  hosts: all
-  become: yes
-  vars:
-    node_exporter_version: 1.1.2
-  roles:
-    - default_packages
-    - access
-    - firewall
-    - node_exporter
-
-- name: установка mysql
-  hosts: mysql
-  become: yes
-  roles:
-    - mysql
-
-- name: установка nginx load_balancer
-  hosts: load_balancer
-  become: yes
-  roles:
-    - load_balancer
-    - nginx_vts
-
-- name: установка wordpress
-  hosts: webservers
-  become: yes
-  vars:
-    - download_url: "http://wordpress.org/latest.tar.gz"
-  roles:
-    - nginx
-    - nginx_vts
-    - php5
-    - wordpress
-
-- name: настройка сервера мониторинга
-  hosts: monitoring
-  roles:
-    - prometheus
-    - alertmanager
-    - grafana
-
-- name: настройка синхронизации
-  hosts: webservers
-  roles:
-    - unison
+#---
+#- name: установка стандартных утилит на все сервера
+#  hosts: all
+#  become: yes
+#  vars:
+#    node_exporter_version: 1.1.2
+#  roles:
+#    - default_packages
+#    - access
+#    - firewall
+#    - node_exporter
+#
+#- name: установка mysql
+#  hosts: mysql
+#  become: yes
+#  roles:
+#    - mysql
+#
+#- name: установка nginx load_balancer
+#  hosts: load_balancer
+#  become: yes
+#  roles:
+#    - load_balancer
+#    - nginx_vts
+#
+#- name: установка wordpress
+#  hosts: webservers
+#  become: yes
+#  vars:
+#    - download_url: "http://wordpress.org/latest.tar.gz"
+#  roles:
+#    - nginx
+#    - nginx_vts
+#    - php5
+#    - wordpress
+#
+#- name: настройка сервера мониторинга
+#  hosts: monitoring
+#  roles:
+#    - prometheus
+#    - alertmanager
+#    - grafana
+#
+#- name: настройка синхронизации
+#  hosts: webservers
+#  roles:
+#    - unison
 
 - name: настройка бэкапов
   hosts: backup
