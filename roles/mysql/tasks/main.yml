@@ -18,6 +18,13 @@
   action: service name=mysql state=started
   when: not mysql.stat.exists
   
+- name: Create a new database
+  mysql_db:
+    name: wordpress
+    state: present
+    check_implicit_admin: true
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    
 - name: create user mysql
   mysql_user:
     name: "{{ db_user }}"
@@ -27,24 +34,12 @@
     state: present
     check_implicit_admin: true
     login_unix_socket: /var/run/mysqld/mysqld.sock
-  when: not mysql.stat.exists
-    
-- name: Create a new database
-  mysql_db:
-    name: wordpress
-    state: present
-    check_implicit_admin: true
-    login_unix_socket: /var/run/mysqld/mysqld.sock
-  when: not mysql.stat.exists
 
 - name: Enable remote login to mysql
-  lineinfile:
-    path: /etc/mysql/mysql.conf.d/mysqld.cnf
-    regexp: '^bind-address'
-    line: 'bind-address = 0.0.0.0'
-    backup: yes
-  when: not mysql.stat.exists
+  template:
+    src: mysqld.cnf.j2
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+    mode: '0777'
     
 - name: Start the MySQL service
   action: service name=mysql state=restarted
-  when: not mysql.stat.exists

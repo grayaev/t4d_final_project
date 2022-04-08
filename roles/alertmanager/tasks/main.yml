@@ -73,6 +73,7 @@
     mode: '0777'
 
 - name: enable alertmanager
+  become: yes
   ansible.builtin.service:
     name: alertmanager
     enabled: yes
