@@ -2,7 +2,7 @@
 all:
     vars:
         ansible_user: ubuntu
-        ansible_ssh_private_key_file: .ssh/id_rsa
+        ansible_ssh_private_key_file: .ssh/id_key
         master: "10.0.0.14" #app01
         slave: "10.0.0.12" #app02
         url_site: "37.139.33.181" #website или адрес балансировщика

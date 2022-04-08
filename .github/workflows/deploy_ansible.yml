@@ -23,11 +23,12 @@ jobs:
           DB_SECRET: ${{ secrets.DB_SECRET }}
         run: |
           mkdir .ssh
-          echo "$DO_SSH_KEY" > .ssh/id_rsa
+          echo "$DO_SSH_KEY" > .ssh/id_key
           chmod 600 .ssh/id_rsa
           echo "$DB_SECRET" > roles/mysql/defaults/main.yml
       - name: run exporters playbook
         run: |
+          ls
           ls -ahl .ssh/
           ansible-playbook -i inventory playbook.yml
 #name: AncibleDeploy
