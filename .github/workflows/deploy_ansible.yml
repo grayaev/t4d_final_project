@@ -24,7 +24,7 @@ jobs:
         run: |
           mkdir .ssh
           echo "$DO_SSH_KEY" > .ssh/id_rsa
-          chmod 400 .ssh/id_rsa
+          chmod 600 .ssh/id_rsa
           echo "$DB_SECRET" > roles/mysql/defaults/main.yml
       - name: run exporters playbook
         run: |
