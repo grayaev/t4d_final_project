@@ -40,7 +40,7 @@
 <p><strong>ключевая пара ssh</strong></p>
 
 <ul>
-	<li style="list-style-type:none">
+	<li>
 	<ul>
 		<li><strong>cd ~ &amp;&amp; mkdir mykey</strong>&nbsp;создаем папку в которой будем хранить ключи</li>
 		<li><strong>ssh-keygen -t rsa -f mykey/my_key&nbsp;</strong>создаем ключи, которые будем использовать далее</li>
@@ -49,7 +49,7 @@
 		<li>в Name пишем DO_SSH_KEY</li>
 		<li>в Value вставляем скопированный ранее ключ</li>
 		<li>сохраняем</li>
-        <li>#!#!#!#!#!#!#!#публичный люч добавляем в authorized key</li>
+		<li>публичный ключ добавляем в <strong>roles/access/tasks/authorized_key</strong></li>
 	</ul>
 	</li>
 </ul>
@@ -84,7 +84,7 @@
 	<li>backup</li>
 </ul>
 
-<p style="margin-left:40px">Наполняем файл inventory/hosts.yml прямо в репозитории</p>
+<p style="margin-left:40px">Наполняем файл<strong> inventory/hosts.yml</strong> прямо в репозитории, не меняя отступы, меняем только IP адреса</p>
 
 <pre>
 <strong>---
@@ -120,3 +120,30 @@ all:
                 backup:
                     ansible_host: 5.188.142.17            # backup внешний адрес</strong></pre>
 
+<p><strong>4) Пушим изменения, переходим в Github Actions и ждем завершения задачи</strong></p>
+
+<p><strong>5) После установки</strong></p>
+
+<ul>
+	<li>Заходим на любой из серверов приложений по внещнему ip адресу и делаем первоначальную&nbsp;настройку wordpress, используя логин/пароль, который придумали для БД и локальный ip адрес БД</li>
+	<li>Заходим в настройки wordpress,&nbsp;указываем в&nbsp;<span style="background-color:rgb(240, 240, 241); color:rgb(29, 35, 39); font-family:-apple-system,blinkmacsystemfont,segoe ui,roboto,oxygen-sans,ubuntu,cantarell,helvetica neue,sans-serif; font-size:14px">WordPress Address (URL) и&nbsp;Site Address (URL)&nbsp;</span>&nbsp;адрес нашего балансировщика и сохраняем настройки</li>
+	<li>Переходим на главную страницу, убеждаемся что все работает и в адресе у нас ip балансира</li>
+</ul>
+
+<p><strong>6) Настраиваем grafana:</strong></p>
+
+<ul>
+	<li>Заходим на внешний ip сервера monitoring на порт 3000 (пример: 111.111.111.111:3000), логин пароль admin/admin</li>
+	<li>Добавляем <strong>Data sources - prometheus -</strong> адрес <strong>http://localhost:9090</strong>, сохраняем</li>
+	<li>Добавляем новую панель через import, копируем json из&nbsp;<strong>roles/grafana/dashboard.json, uid&nbsp;</strong>заменяем на&nbsp;<strong>_6_DZjynz</strong></li>
+	<li>Сохраняем</li>
+</ul>
+
+<p><strong>Backup</strong></p>
+
+<p>Бэкапы хранятся на сервере&nbsp;<strong><span style="color:rgb(0, 51, 179)">backup</span></strong> по адресу&nbsp;<strong>/backup&nbsp;</strong>в папках:</p>
+
+<ul>
+	<li><strong>wp</strong></li>
+	<li><strong>dbbackup</strong></li>
+</ul>

@@ -3,30 +3,30 @@ all:
     vars:
         ansible_user: "ubuntu"
         ansible_ssh_private_key_file: ".ssh/id_key"
-        master: "10.0.0.14" #app01
-        slave: "10.0.0.12" #app02
-        url_site: "37.139.33.181" #website или адрес балансировщика
-        db_mysql: "10.0.0.9"
+        master: "10.0.0.10" #app01
+        slave: "10.0.0.4" #app02
+        url_site: "95.163.180.123" #website или адрес балансировщика
+        db_mysql: "10.0.0.33"
     children:
         webservers:
             hosts:
                 app01:
-                    ansible_host: 89.208.85.81
+                    ansible_host: 5.188.142.6
                 app02:
-                    ansible_host: 95.163.180.123
+                    ansible_host: 37.139.33.181
         mysql:
             hosts:
                 database:
-                    ansible_host: 146.185.243.121
+                    ansible_host: 89.208.220.113
         monitoring:
             hosts:
                 monitoring:
-                    ansible_host: 89.208.220.113
+                    ansible_host: 146.185.243.121
         load_balancer:
             hosts:
                 loadbalancer:
-                    ansible_host: 37.139.33.181
+                    ansible_host: 95.163.180.123
         backup:
             hosts:
                 backup:
-                    ansible_host: 5.188.142.6
+                    ansible_host: 89.208.85.81
