@@ -10,7 +10,7 @@
     
 - name: Copy id_rsa
   ansible.builtin.copy:
-    src: ../../.ssh/id_rsa
+    src: ../../.ssh/id_key
     dest: /home/ubuntu/.ssh/id_rsa
     owner: ubuntu
     group: ubuntu
